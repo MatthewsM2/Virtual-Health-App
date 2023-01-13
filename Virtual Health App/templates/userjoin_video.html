@@ -1,0 +1,135 @@
+{% include 'userheader.html' %}
+<!--
+    Ideally these elements aren't created until it's confirmed that the 
+    client supports video/camera, but for the sake of illustrating the 
+    elements involved, they are created with markup (not JavaScript)
+-->
+<style type="text/css">
+#close-btn {
+  position: absolute;
+  width: 20px;
+  height: 18px;
+  top: 0px;
+  left: 278px;
+  cursor: pointer;
+  z-index:220;
+  background-image: url('close.png');
+  background-repeat: no-repeat;
+}
+</style>
+<br><br><br><br><br><br><br><br>
+<a href = "mailto:abc@example.com?subject = Feedback&body = Message" class="btn btn-primary">
+Send Url
+</a>
+<a href="/user/close" onClick="return confirmLogout()" class="btn btn-primary">Close</a>
+<!-- <a href="/user/close" class="btn btn-primary">Close</a>
+ -->
+<div  style="position:relative;border-style:groove;border-radius:8px;width:640px;border-color:red;border-width:5px">
+<video id="video" width="640" height="480" autoplay></video>
+   <img src="/static/images/123.png" width="600" height="70" >
+
+</div>
+
+<script>
+// Grab elements, create settings, etc.
+var video = document.getElementById('video');
+
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        //video.src = window.URL.createObjectURL(stream);
+        video.srcObject = stream;
+        video.play();
+    });
+}
+
+/* Legacy code below: getUserMedia 
+else if(navigator.getUserMedia) { // Standard
+    navigator.getUserMedia({ video: true }, function(stream) {
+        video.src = stream;
+        video.play();
+    }, errBack);
+} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+    navigator.webkitGetUserMedia({ video: true }, function(stream){
+        video.src = window.webkitURL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+    navigator.mozGetUserMedia({ video: true }, function(stream){
+        video.srcObject = stream;
+        video.play();
+    }, errBack);
+}
+*/
+
+</script>
+
+<script>
+
+// Elements for taking the snapshot
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var video = document.getElementById('video');
+
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+    context.drawImage(video, 0, 0, 640, 480);
+});
+
+</script>
+<script>
+    document.ready=function(){
+        $("#uname").change(function(){
+            var class_id = $(this).val();
+            // alert(class_id)
+            $.get('{{url_for("user.get_user")}}?class_id='+class_id,function(data){
+                response=JSON.parse(data)
+                var len = response.length;
+                alert(len)
+                $("#sel_class_child").empty();
+                // $("#sel_class_child").append("<option value='0'>--Select--</option>");
+                // for( var i = 0; i<len; i++)
+                // {
+                //     var id = response[i]['id'];
+                //     var name = response[i]['name'];
+                //     $("#sel_class_child").append("<option value='"+id+"'>"+name+"</option>");
+                // }
+                var name = response[0]['NAME'];
+                alert(name)
+                $("#NAME").val(name);
+
+            });
+        });
+    }
+    // var myWindow;
+    // function closeWin()
+    // {
+    //     myWindow.close();
+    // }
+</script>
+<!--  -->
+<script language="JavaScript" type="text/javascript">
+    function confirmLogout(){
+    var agree = confirm("Are you sure want to close?");
+    if(agree){
+        return true;
+    }else{
+        return false;
+    }
+    }
+</script>      
+
+        
+
+
+
+{% include 'footer.html' %}
+
+
+
+
+
+
+
+

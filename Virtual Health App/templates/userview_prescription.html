@@ -1,0 +1,29 @@
+{% include 'userheader.html'%}
+<body style="background: pink">
+	<br><br><br>
+	<h1 align="center"><font color="black"><u>Patients Prescription</u></font></h1>
+	<form method="post">
+
+	<table  align="center" class="table" style="width:700px;">
+			<tr>
+				<th><font color="black">Date</font></th>
+				<th><font color="black">Patient Name</font></th>
+				<th><font color="black">Doctor Name</font></th>
+				<th><font color="black">Medicine Name</font></th>
+				<th><font color="black">Quantity</font></th>
+
+			</tr>
+			<tbody>
+			{% for row in data['pre']%}
+			<td><font color="black"><b>{{row['date']}}</b></font></td>
+			<td><font color="black"><b>{{row['PNAME']}}</b></font></td>
+			<td><font color="black"><b>{{row['DNAME']}}</b></font></td>
+			<td><font color="black"><b>{{row['medicine_name']}}</b></font></td>
+			<td><font color="black"><b>{{row['quantity']}}</b></font></td>
+			<td><a href="/user/search_medicine?id={{row['pres_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Search Medicine</a></td>
+		</tbody>
+		{% endfor %}
+	</table>
+	</form>
+<br><br><br><br>
+{% include 'footer.html'%}

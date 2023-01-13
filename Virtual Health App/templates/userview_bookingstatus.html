@@ -1,0 +1,28 @@
+{% include 'userheader.html'%}
+<body style="background: pink">
+	<br><br><br>
+	<h1 align="center"><font color="black"><u>Booking Status</u></font></h1>
+	<form method="post">
+
+	<table  align="center" class="table" style="width:700px;">
+			<tr>
+				<th><font color="black">Booking Date</font></th>
+				<th><font color="black">Patient Name</font></th>
+				<th><font color="black">Doctor Name</font></th>
+				<th><font color="black">Status</font></th>
+			</tr>
+			<tbody>
+			{% for row in data['book']%}
+			<td><font color="black"><b>{{row['date']}}</b></font></td>
+			<td><font color="black"><b>{{row['NAME']}}</b></font></td>
+			<td><font color="black"><b>{{row['DNAME']}}</b></font></td>
+			<td><font color="black"><b>{{row['status']}}</b></font></td>
+			<td>
+				<a href="?action=delete&id={{row['booking_id']}}" class="btn btn-primary">Cancel</a>
+			</td>
+		</tbody>
+		{% endfor %}
+	</table>
+	</form>
+<br><br><br><br>
+{% include 'footer.html'%}

@@ -1,0 +1,37 @@
+{% include 'doctor_header.html'%}
+<body style="background: pink">
+	<br><br><br>
+	<h1 align="center"><font color="black"><u>Booking Status</u></font></h1>
+	<form method="post">
+
+	<table  align="center" class="table" style="width:700px;">
+			<tr>
+				<th><font color="black">Booking Date</font></th>
+				<th><font color="black">Patient Name</font></th>
+				<th><font color="black">Doctor Name</font></th>
+				<th><font color="black">Status</font></th>
+			</tr>
+			<tbody>
+			{% for row in data['book']%}
+			<td><font color="black"><b>{{row['date']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;
+			<td><font color="black"><b>{{row['NAME']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;
+			<td><font color="black"><b>{{row['DNAME']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<!-- <td><font color="black"><b>{{row['status']}}</b></font></td> -->
+			
+					{% if row['status']=='Booked' %}
+					<td>
+						<a href="/doctor/updatebooking_status?id={{row['booking_id']}}" style="text-decoration: none" class="btn btn-primary">Accept</a>
+					
+						<a href="/doctor/updatebooking_status?id1={{row['booking_id']}}" style="text-decoration: none" class="btn btn-primary">Reject</a>
+					</td>&nbsp;&nbsp;&nbsp;&nbsp;
+					{% else %}
+					<td><font color="black"><b>{{row['status']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;
+					<td><a href="/doctor/view_progress?id={{row['booking_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">View Patient Progress</a></td>
+				{% endif %}
+
+		</tbody>
+		{% endfor %}
+	</table>
+	</form>
+<br><br><br><br>
+{% include 'footer.html'%}
