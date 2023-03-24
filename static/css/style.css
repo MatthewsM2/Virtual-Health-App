@@ -746,6 +746,7 @@ button:focus{
     border: 1px solid #16567f;
     text-align: center;
     position: relative;
+	height: 57vh;
     transition: all 0.3s ease 0s;
 }
 .serviceBox:hover{ border-color: #00cb86 ; }
@@ -1184,6 +1185,7 @@ button:focus{
 	margin-bottom: 30px;
 	border: 10px solid #fff;
 	box-shadow: 0 2px 5px rgba(0,0,0,.1);
+	min-height: 97vh;
 }
 
 .blog-img{
