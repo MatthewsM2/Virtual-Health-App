@@ -83,7 +83,8 @@ def add_appoinment():
     ids=session['login_id']
     if 'submit' in request.form:
         date=request.form['date']
-        q="insert into booking values(null,(select patient_id from patients where login_id='%s'),'%s','%s','Booked')"%(ids,id,date)
+        time=request.form['time']
+        q="insert into booking values(null,(select patient_id from patients where login_id='%s'),'%s',(CONCAT('%s', ' ', '%s')),'Booked')"%(ids,id,date,time)
         insert(q)
         flash("Booked Successfully")
         return redirect(url_for('user.search_doctors'))
