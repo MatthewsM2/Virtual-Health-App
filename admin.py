@@ -39,9 +39,19 @@ def viewdoctors():
 		delete(q)
 		flash("Account Deleted")
 		return redirect(url_for('admin.viewdoctors'))
-	q="SELECT *,CONCAT(first_name,' ',last_name)AS NAME FROM `doctors`"
+	q="SELECT *,CONCAT(first_name,' ',last_name)AS NAME FROM `doctors` inner join login using(login_id)"
 	res=select(q)
 	data['doc']=res
+	if  'id1' in request.args:
+		id1 = request.args['id1']
+		q = "UPDATE login SET usertype='Doctor' WHERE login_id='%s' AND usertype='Pending'" % id1
+		update(q)
+		return redirect(url_for('admin.viewdoctors'))
+	elif 'id2' in request.args:
+		id2 = request.args['id2']
+		q = "UPDATE login SET usertype='Request Reject' WHERE login_id='%s' AND usertype='Pending'" % id2
+		update(q)
+		return redirect(url_for('admin.viewdoctors'))
 	return render_template('adview_doctors.html',data=data)
 
 @admin.route('/manage_patients',methods=['get','post'])
@@ -61,10 +71,10 @@ def manage_patients():
 		address=request.form['address']
 		uname=request.form['uname']
 		password=request.form['password']
-		q="select * from patients where first_name='%s'"%(fname)
+		q="select * from  rooms where room_name='%s'"%(rname)
 		res=select(q)
 		if len(res)>0:
-			flash("Already Exists")
+			flash("Already Reserved")
 		else:
 			q="insert into login values(null,'%s','%s','patients')"%(uname,password)
 			res=insert(q)
@@ -187,3 +197,25 @@ def view_orderedmedicine():
 		update(q)
 		return redirect(url_for('admin.view_orderedmedicine'))
 	return render_template('adminview_orderedmedicine.html',data=data)
+
+@admin.route('/view_rooms',methods=['get','post'])
+def view_rooms():
+	data={}
+	q="select * from rooms"
+	res=select(q)
+	data['ro']=res
+	if  'action' in request.args:
+		action=request.args['action']
+		id=request.args['id']
+	else:
+		action=None
+	if action=="update":
+		q="select * from rooms where room_id='%s'"%(id)
+		res=select(q)
+		data['updateprt']=res
+	if 'update' in request.form:
+		room_status=request.form['room_status']
+		q="update rooms set room_status='%s' where room_id='%s'"%(room_status,id)
+		update(q)
+		return redirect(url_for('admin.view_rooms'))
+	return render_template("adminview_rooms.html",data=data)

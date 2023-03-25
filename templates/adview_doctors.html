@@ -67,6 +67,16 @@ input[type=text]{
 						<h3><b>Gender:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['gender']}}</b></h3><br>	
 						<h3><b>Qualification:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['Qualification']}}</h3></b><br>	
 						<h3><b>Contact No.:&nbsp;&nbsp;&nbsp;&nbsp;{{row['phone']}}</b></h3><br><h3><b>Email:&nbsp;&nbsp;&nbsp;&nbsp;{{row['email']}}</b></h3><br>	
+						{% if row['usertype'] == 'Pending' %}
+						<td>
+							<a href="/admin/viewdoctors?id1={{row['login_id']}}" style="text-decoration: none" class="btn btn-primary">Accept</a>
+							<a href="/admin/viewdoctors?id2={{row['login_id']}}" style="text-decoration: none" class="btn btn-primary">Reject</a>
+						</td>
+					{% else %}
+						<td>
+							<font color="black"><b>{{row['usertype']}}</b></font>
+						</td>
+					{% endif %}
 						<a href="?action=delete&id={{row['doctor_id']}}&id1={{row['login_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>
 					</div>
 			{% endfor %} 

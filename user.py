@@ -72,6 +72,9 @@ def search_doctors():
         q="select *,concat(first_name,' ',last_name)as NAME from doctors WHERE  doctors.first_name LIKE '%s'"%(name)
         res=select(q)
         data['viewsearch']=res
+    q="select *,concat(first_name,' ',last_name)as NAME from doctors"
+    res=select(q)
+    data['doc']=res
     return render_template('usersearch_doctors.html',data=data)
 
 @user.route('/add_appionment',methods=['get','post'])

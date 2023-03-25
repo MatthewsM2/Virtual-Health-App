@@ -36,9 +36,13 @@
 
 </head>
 
-<body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98"
-    style="background-image: url();">
-
+<body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98" style="background-image: url();">
+<style>
+    li a{
+        display: block;
+        width: 100%;
+    }
+</style>
     <!-- LOADER -->
     <div id="preloader">
         <div class="loader">
@@ -46,10 +50,6 @@
         </div>
     </div>
     <!-- END LOADER -->
-
-    <!-- Start top bar -->
-    
-    <!-- End top bar -->
 
     <!-- Start header -->
     <header class="top-header">
@@ -71,7 +71,6 @@
                                 <li><a href="/admin/managerooms">Add Rooms</a></li>
                                 <li><a href="/admin/manage_patients">Add Patients</a></li>
                                 <li><a href="/admin/manage_pharmacy">Add Pharmacy</a></li>
-
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -82,13 +81,13 @@
                                 <li><a href="/admin/view_pharmacy">Pharmacy&nbsp;Details</a></li>
                                 <li><a href="/admin/view_feedbacks">Feedbacks</a></li>
                                 <li><a href="/admin/view_orderedmedicine">Delivery Status</a></li>
-
-
+                                <li><a href="/admin/view_rooms">Rooms</a></li>
+                                
                             </ul>
                         </li>
                     </ul>
                     </li>
-                    <li><a class="nav-link" href="/">SIGN OUT</a></li>
+                    <li><a class="nav-link" href="/" onClick="return confirmLogout()">SIGN OUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -107,3 +106,27 @@
 
     {% endif %}
     {% endwith %}
+
+    <script language="JavaScript" type="text/javascript">
+        function confirmLogout(){
+        var agree = confirm("Are you sure want to Logout?");
+        if(agree){
+            return true;
+        }else{
+            return false;
+        }
+        }
+        window.history.forward();
+    
+    function noBack() {
+        window.history.forward();
+    }
+    
+    // Disable back button on all browsers
+    window.onload = function() {
+        setTimeout(noBack(), 0);
+        window.onpageshow = function(evt) { if (evt.persisted) noBack(); };
+        window.onunload = function() { void (0); };
+    };
+    
+    </script>

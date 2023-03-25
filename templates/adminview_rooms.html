@@ -1,0 +1,104 @@
+{% include 'adminheader.html'%}
+<style type="text/css">
+    /*.container{
+        text-align: center;
+        background-color: rgb(99, 109, 109);
+        padding: 100px;
+    }*/
+    table{
+        width: 50%;
+        padding: 12px;
+        border-radius: 4px;
+        resize: vertical;
+        color: black;
+        font-style: bold;
+        font-family:Calibri;
+        font-size: 20px;
+    }
+    tr{
+        width: 90%;
+        padding: 12px;
+        border-radius: 4px;
+        resize: vertical;
+        color: black;
+        font-style: bold;
+        font-family:Calibri;
+        font-size: 20px;
+    }
+    th{
+        width: 20%;
+        padding: 12px;
+        border-radius: 4px;
+        resize: vertical;
+        color: black;
+        font-style: bold;
+        font-family:Calibri;
+        font-size: 20px;
+
+    }
+    td{
+        width: 90%;
+        padding: 12px;
+        border-radius: 4px;
+        resize: vertical;
+        color: black;
+        font-style: bold;
+        font-family:Calibri;
+        font-size: 20px;
+
+    }
+    input[type=submit]
+    {
+        width: 20%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+   
+</style>
+<body style="background: pink">
+	<br><br><br>
+	<h1 align="center"><font color="black"><u>Room Status</u></font></h1>
+	<form method="post">
+        <form method="post">
+        	<br><br><br>
+            {% if data['updateprt'] %}
+       <table  align="Center">
+           	<tr class="tr">
+           		<th>Room Status</th>
+           		<td class="td">
+           			<input type="radio"  name="room_status" required="" value="Reserved">&nbsp; Reserved &nbsp;
+           			<input type="radio"  name="room_status" required="" value="Not Reserved">&nbsp; Not Reserved &nbsp;
+           		</td>
+           	</tr>
+           	<tr class="tr">
+           		<td colspan="2" align="center" class="td">
+           			<input type="submit" name="update" value="Sign In" class="btn btn-primary">
+           		</td>
+           	</tr>
+           </table>
+           {% else %}
+	<table  align="center" class="table" style="width:700px;">
+			<tr>
+				<th><font color="black">Room Name</font></th>
+				<th><font color="black">Room Status</font></th>
+			</tr>
+			<tbody>
+			{% for row in data['ro']%}
+			<td><font color="black"><b>{{row['room_name']}}</b></font></td>
+			<td><font color="black"><b>{{row['room_status']}}</b></font></td>
+			<td>
+                <a href="?action=update&id={{row['room_id']}}" class="btn btn-primary">Edit</a>
+            </td>
+		</tbody>
+							
+
+		{% endfor %}
+	</table>
+			
+{% endif %}
+	</form>
+<br><br><br><br>
+{% include 'footer.html'%}

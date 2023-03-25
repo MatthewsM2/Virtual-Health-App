@@ -21,9 +21,11 @@ def login():
 			if result[0]['usertype']=="patients":
 				flash("Login successfully")
 				return redirect(url_for('user.userhome'))
-			if result[0]['usertype']=="doctor":
+			if result[0]['usertype']=="Doctor":
 				flash("Login successfully")
 				return redirect(url_for('doctor.doctorhome'))
+			else:
+				flash("Invalid Login Data")
 		else:
 			flash("invalid username and password")
 	return render_template('login.html')
@@ -45,7 +47,7 @@ def doctors_register():
 		if len(res)>0:
 			flash("Already Exists")
 		else:
-			q="insert into login values(null,'%s','%s','doctor')"%(uname,password)
+			q="insert into login values(null,'%s','%s','Pending')"%(uname,password)
 			res=insert(q)
 			q="insert into doctors values(null,'%s','%s','%s','%s','%s','%s','%s')"%(res,fname,lname,qual,phone,email,gender)
 			insert(q)

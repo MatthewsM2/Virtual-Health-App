@@ -100,7 +100,7 @@
                         </li>                                                    
            </ul>
         </li>
-                        <li><a class="nav-link" href="/">SIGN OUT</a></li>
+                        <li><a class="nav-link" href="/" onClick="return confirmLogout()">SIGN OUT</a></li>
                         <!-- <li><a class="nav-link" href="#services">Services</a></li>
 						<li><a class="nav-link" href="#appointment">Appointment</a></li>
                         <li><a class="nav-link" href="#gallery">Gallery</a></li>
@@ -126,3 +126,26 @@
     {% endif %}
     {% endwith %}
 	
+    <script language="JavaScript" type="text/javascript">
+        function confirmLogout(){
+        var agree = confirm("Are you sure want to Logout?");
+        if(agree){
+            return true;
+        }else{
+            return false;
+        }
+        }
+        window.history.forward();
+    
+    function noBack() {
+        window.history.forward();
+    }
+    
+    // Disable back button on all browsers
+    window.onload = function() {
+        setTimeout(noBack(), 0);
+        window.onpageshow = function(evt) { if (evt.persisted) noBack(); };
+        window.onunload = function() { void (0); };
+    };
+    
+    </script>
