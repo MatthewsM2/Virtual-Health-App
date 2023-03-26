@@ -51,12 +51,6 @@
 						<li><a href="#blog" class="nav-link">Blog</a></li>
 						<li><a href="#contact" class="nav-link">Contact us</a></li>
 						<li><a class="nav-link" href="/login">Sign In</a></li>
-						<!-- <li class="dropdown">
-							<a href="#" class="nav-link " data-toggle="dropdown">Register</a>
-							<ul class="dropdown-menu ">
-								<li><a href="/doctors_register">Doctors</a></li>
-							</ul>
-						</li> -->
 					</ul>
 				</div>
 			</div>
@@ -277,7 +271,10 @@
 						<div class="well-title">
 							<h2>Book an Appointment</h2>
 						</div>
-						<form>
+
+
+
+						<form action="/submit_form" method="post">
 							<!-- Form start -->
 							<div class="row">
 								<div class="col-md-6">
@@ -293,6 +290,20 @@
 										<label class="control-label" for="email">Email</label>
 										<input id="email" name="email" type="text" placeholder="E-Mail"
 											class="form-control input-md">
+									</div>
+								</div>
+								<!-- select doctor -->
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="control-label" for="appointmentfor">Department</label>
+										<select id="appointmentfor" name="appointmentfor" class="form-control">
+											<option value="Choose Department">Choose Department</option>
+											<option value="Gynacology">Gynacology</option>
+											<option value="Dermatologist">Dermatologist</option>
+											<option value="Orthology">Orthology</option>
+											<option value="Anesthesiology">Anesthesiology</option>
+											<option value="Ayurvedic">Ayurvedic</option>
+										</select>
 									</div>
 								</div>
 								<!-- Text input-->
@@ -314,20 +325,6 @@
 										</select>
 									</div>
 								</div>
-								<!-- Select Basic -->
-								<div class="col-md-12">
-									<div class="form-group">
-										<label class="control-label" for="appointmentfor">Department</label>
-										<select id="appointmentfor" name="appointmentfor" class="form-control">
-											<option value="Choose Department">Choose Department</option>
-											<option value="Gynacology">Gynacology</option>
-											<option value="Dermatologist">Dermatologist</option>
-											<option value="Orthology">Orthology</option>
-											<option value="Anesthesiology">Anesthesiology</option>
-											<option value="Ayurvedic">Ayurvedic</option>
-										</select>
-									</div>
-								</div>
 								<!-- Button -->
 								<div class="col-md-12">
 									<div class="form-group">
@@ -337,6 +334,9 @@
 								</div>
 							</div>
 						</form>
+
+
+
 						<!-- form end -->
 					</div>
 				</div>
