@@ -13,16 +13,16 @@ $("#contactForm").validator().on("submit", function (event) {
 
 function submitForm(){
     // Initiate Variables With Form Content
-    var name = $("#name").val();
-    var email = $("#email").val();
-    var msg_subject = $("#msg_subject").val();
+    var name = $("#con_name").val();
+    var email = $("#con_email").val();
+    var number =$("#number").val();
     var message = $("#message").val();
 
 
     $.ajax({
         type: "POST",
-        url: "php/form-process.php",
-        data: "name=" + name + "&email=" + email + "&msg_subject=" + msg_subject + "&message=" + message,
+        url: "/submit_contact",
+        data: "contact-name=" + name + "&contact-email=" + email + "&contact-number=" + number +  "&contact-message=" + message,
         success : function(text){
             if (text == "success"){
                 formSuccess();

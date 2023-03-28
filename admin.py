@@ -243,7 +243,6 @@ def view_rooms():
 @admin.route('/assign_doc', methods=['get', 'post'])
 def assign_doc():
     data = {}
-
     q = "SELECT * FROM doctors"
     # assume that the `select()` function is defined elsewhere
     res = select(q)

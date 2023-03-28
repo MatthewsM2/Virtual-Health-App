@@ -281,37 +281,40 @@
 									<div class="form-group">
 										<label class="control-label" for="name">Name</label>
 										<input id="name" name="name" type="text" placeholder="Name"
-											class="form-control input-md">
+											class="form-control input-md" required>
 									</div>
 								</div>
 								<!-- Text input-->
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label" for="email">Email</label>
-										<input id="email" name="email" type="text" placeholder="E-Mail"
-											class="form-control input-md">
+										<input id="email" name="email" type="email" placeholder="E-Mail"
+											class="form-control input-md" required>
 									</div>
 								</div>
 								<!-- select doctor -->
 								<div class="col-md-12">
 									<div class="form-group">
-										<label class="control-label" for="appointmentfor">Department</label>
-										<select id="appointmentfor" name="appointmentfor" class="form-control">
-											<option value="Choose Department">Choose Department</option>
-											<option value="Gynacology">Gynacology</option>
-											<option value="Dermatologist">Dermatologist</option>
-											<option value="Orthology">Orthology</option>
-											<option value="Anesthesiology">Anesthesiology</option>
-											<option value="Ayurvedic">Ayurvedic</option>
+										<label class="control-label" for="appointmentfor">Doctors</label>
+										<select id="appointmentfor" name="doctor" class="form-control" required>
+											<option value="">Choose Doctor</option>
+											{% for row in data['doc'] %}
+											<option value="{{row['doctor_id']}}">{{row['first_name']+'
+												'+row['last_name']}}</option>
+											{% endfor %}
 										</select>
 									</div>
 								</div>
 								<!-- Text input-->
 								<div class="col-md-6">
 									<div class="form-group">
-										<label class="control-label" for="date">Preferred Date</label>
-										<input id="date" name="date" type="text" placeholder="Preferred Date"
-											class="form-control input-md">
+										<label class="control-label" for="appointmentfor">Preferred Time</label>
+										<select id="appointmentfor" name="appointmentfor" class="form-control" required>
+											<option value="">Select Date</option>
+											{% for row in data['days'] %}
+											<option value="{{row['date']}}">{{row['date']}}</option>
+											{% endfor %}
+										</select>
 									</div>
 								</div>
 								<!-- Select Basic -->
@@ -319,16 +322,19 @@
 									<div class="form-group">
 										<label class="control-label" for="time">Preferred Time</label>
 										<select id="time" name="time" class="form-control">
-											<option value="8:00 to 9:00">8:00 to 9:00</option>
-											<option value="9:00 to 10:00">9:00 to 10:00</option>
-											<option value="10:00 to 1:00">10:00 to 1:00</option>
+											{% for row in time['tim'] %}
+											<option value="{{row['val']}}">{{row['real']}}</option>
+											{% endfor %}
+
+
 										</select>
 									</div>
 								</div>
 								<!-- Button -->
 								<div class="col-md-12">
 									<div class="form-group">
-										<button id="singlebutton" name="singlebutton" class="new-btn-d br-2">Make An
+										<button value="submit" id="singlebutton" name="singlebutton"
+											class="new-btn-d br-2">Make An
 											Appointment</button>
 									</div>
 								</div>
@@ -386,7 +392,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="popup-gallery row clearfix">
 				<div class="col-md-3 col-sm-6">
 					<div class="box-gallery">
@@ -645,37 +650,39 @@
 
 				<div class="col-lg-12 col-xs-12">
 					<div class="contact-block">
-						<form id="contactForm">
+						<form id="contactForm" method="post" action="/submit_contact">
 							<div class="row">
+
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="text" class="form-control" id="name" name="name"
+										<input type="text" class="form-control" id="con_name" name="contact-name"
 											placeholder="Your Name" required data-error="Please enter your name">
 										<div class="help-block with-errors"></div>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="text" placeholder="Your Email" id="email" class="form-control"
-											name="name" required data-error="Please enter your email">
+										<input type="email" placeholder="Your Email" id="con_email" class="form-control"
+											name="contact-email" required data-error="Please enter your email">
 										<div class="help-block with-errors"></div>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<input type="text" placeholder="Your number" id="number" class="form-control"
-											name="number" required data-error="Please enter your number">
+											pattern="[789][0-9]{9}" name="contact-number" required
+											data-error="Please enter your Mobile Number">
 										<div class="help-block with-errors"></div>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<textarea class="form-control" id="message" placeholder="Your Message" rows="8"
-											data-error="Write your message" required></textarea>
+											data-error="Write your message" required name="contact-message"></textarea>
 										<div class="help-block with-errors"></div>
 									</div>
 									<div class="submit-button text-center">
-										<button class="btn btn-common" id="submit" type="submit">Send Message</button>
+										<button class="btn btn-common"  type="submit" value="submit" name="onMessSubmit">Send Message</button>
 										<div id="msgSubmit" class="h3 text-center hidden"></div>
 										<div class="clearfix"></div>
 									</div>
