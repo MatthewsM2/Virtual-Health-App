@@ -1,86 +1,175 @@
 {% include 'adminheader.html' %}
-<br><br><br><br><br>
+<br><br>
 <style>
-.grid-container{
-	display: grid;
-	grid-template-columns: auto auto auto;
-	background-color: white;
-	padding: 10px;
-	grid-row-gap: 5px;
-	grid-column-gap: 10px;
-}	
-.grid-item {
-	background-color: white;
-	padding: 10px;
-	border: 1px solid black;
-	border-radius: 15px;
-	text-align: center;
+	.grid-container {
+		display: grid;
+		grid-template-columns: auto auto auto;
+		background-color: white;
+		padding: 10px;
+		grid-row-gap: 5px;
+		grid-column-gap: 10px;
 	}
 
-table{
-	background-color: lightyellow;
-	padding: 30px;
-	text-align: center;
-
+	.su-container {
+		margin: 0 8vh 4vh 8vh;
+		border: 2px rgba(0, 0, 0, 0.156) solid;
+		width: 80vh;
+		padding: 20px;
+		border-radius: 1vh;
 	}
-td{
-	width:50%;
-	padding: 20px;
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
+
+	.grid-item {
+		background-color: white;
+		padding: 10px;
+		border: 1px solid black;
+		border-radius: 15px;
+	}
+
+h1{
+	text-transform: capitalize;
 }
-tr{
-	width:50%;
-	padding: 20px;
+	.imageContainer {
+		height: 240px;
+		width: 157px;
+		background-color: aqua;
+		border-radius: 5px;
+	}
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
-input[type=text]{
-	width:95%;
-	padding: 20px;
+	.imageContainer img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		cursor: pointer;
+	}
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-/*	border:1px solid black;
-*/}
-	input[type=submit]{
-	width:95%;
-	padding: 20px;
+	.sub1 {
+		height: 240px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
+	.subContainer {
+		display: flex;
+		justify-content: space-between;
+	}
 
+	textarea {
+		margin-top: 2vh;
+		width: 100%;
+		outline: none;
+	}
+
+	.parent-Cont {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	input[type="file"] {
+		display: block;
+		opacity: 0%;
+		position: absolute;
+		height: 1px;
+	}
 </style>
-    <body style="background-image: url(/static/images/gallery-02.jpg);">
-    	<h1 align="center"> <font size="30">Doctors Details</font></h1>
-	<div class="grid-container">
-		
-			{% for row in data['doc'] %}
-					<div class="grid-item">
-						<h3><b>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['NAME']}}</b></h3><br>
-						<h3><b>Gender:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['gender']}}</b></h3><br>	
-						<h3><b>Qualification:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['Qualification']}}</h3></b><br>	
-						<h3><b>Contact No.:&nbsp;&nbsp;&nbsp;&nbsp;{{row['phone']}}</b></h3><br><h3><b>Email:&nbsp;&nbsp;&nbsp;&nbsp;{{row['email']}}</b></h3><br>	
-						{% if row['usertype'] == 'Pending' %}
-						<td>
-							<a href="/admin/viewdoctors?id1={{row['login_id']}}" style="text-decoration: none" class="btn btn-primary">Accept</a>
-							<a href="/admin/viewdoctors?id2={{row['login_id']}}" style="text-decoration: none" class="btn btn-primary">Reject</a>
-						</td>
-					{% else %}
-						<td>
-							<font color="black"><b>{{row['usertype']}}</b></font>
-						</td>
-					{% endif %}
-						<a href="?action=delete&id={{row['doctor_id']}}&id1={{row['login_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>
-					</div>
-			{% endfor %} 
-	</div>
-</body>
 
+<body style="background-image: url(/static/images/gallery-02.jpg);">
+	<!-- <div class="grid-container">
+
+		{% for row in data['doc'] %}
+		<div class="grid-item">
+
+			<div class="Details">
+				<div class="namelabel">
+					<h2>Dr.{{row['NAME']}}</h2>
+					<h5>{{row['Qualification']}}</h5>
+				</div>
+				<div class="contactlabel">
+					<h6>{{row['gender']}}</h6>
+					<h4>{{row['phone']}}</h4>
+					<h4>{{row['email']}}</h4>
+				</div>
+			</div>
+
+
+			{% if row['usertype'] == 'Pending' %}
+			<td>
+				<a href="/admin/viewdoctors?id1={{row['login_id']}}" style="text-decoration: none"
+					class="btn btn-primary">Accept</a>
+				<a href="/admin/viewdoctors?id2={{row['login_id']}}" style="text-decoration: none"
+					class="btn btn-primary">Reject</a>
+			</td>
+			{% else %}
+			<td>
+				<font color="black"><b>{{row['usertype']}}</b></font>
+			</td>
+			{% endif %}
+			<a href="?action=delete&id={{row['doctor_id']}}&id1={{row['login_id']}}" class="btn btn-sm btn-danger"
+				style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>
+		</div>
+		{% endfor %}
+	</div> -->
+	<div class="parent-Cont">
+		{% for row in data['doc'] %}
+		<div class="su-container">
+			<div class="subContainer">
+				<div class="sub1">
+					<div>
+						<h1>Dr.{{row['NAME']}}</h1>
+						<h5>{{row['Qualification']}}</h5>
+					</div>
+					<h3>+91 {{row['phone']}}</h3>
+					<h3>{{row['email']}}</h3>
+				</div>
+				<div class="sub2">
+					<label for="file-ip-{{ loop.index }}">
+						<div class="imageContainer">
+							{% if row['gender'] == 'female' %}
+							<img src="https://img.freepik.com/free-vector/doctor-background-design_1270-62.jpg?size=626&ext=jpg"
+								alt="" id="file-ip-1-preview">
+							{% elif row['gender'] == 'other'%}
+							<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BrvftUuObhVHhlrmMAAMFwHaHa%26pid%3DApi&f=1&ipt=fa3ccaf1994c59a6369dd391c55459e78fc2b1d755d8c44e50e6be8dc2532921&ipo=images"
+								alt="" id="file-ip-1-preview">
+							{% else %}
+							<img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=626&ext=jpg"
+								alt="" id="file-ip-1-preview">
+							{% endif %}
+					</label>
+				</div>
+				<input type="file" id="file-ip-{{ loop.index }}" accept="image/*" onchange="showPreview(event);">
+			</div>
+		</div>
+		<div class="textarea">
+			<textarea name="" id="" placeholder="Write the Specialization"></textarea>
+		</div>
+		<div>
+			{% if row['usertype'] == 'Pending' %}
+			<a href="/admin/viewdoctors?id1={{row['login_id']}}" style="text-decoration: none"
+				class="btn btn-primary">Accept</a>
+			<a href="/admin/viewdoctors?id2={{row['login_id']}}" style="text-decoration: none"
+				class="btn btn-primary">Reject</a>
+			{% endif %}
+			<button class="btn btn-success">Save</button>
+			<button class="btn btn-danger">Delete</button>
+		</div>
+	</div>
+	{% endfor %}
+	</div>
+
+
+</body>
+<script>
+	function showPreview(event) {
+		if (event.target.files.length > 0) {
+			var parent = event.target.parentElement;
+			var parent = parent.children[0];
+			var src = URL.createObjectURL(event.target.files[0]);
+			var preview = parent.children[0];
+			console.log(preview);
+			preview.src = src;
+			preview.style.display = "block";
+		}
+	}
+</script>
 {% include 'footer.html' %}
