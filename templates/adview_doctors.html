@@ -25,9 +25,10 @@
 		border-radius: 15px;
 	}
 
-h1{
-	text-transform: capitalize;
-}
+	h1 {
+		text-transform: capitalize;
+	}
+
 	.imageContainer {
 		height: 240px;
 		width: 157px;
@@ -125,33 +126,56 @@ h1{
 				<div class="sub2">
 					<label for="file-ip-{{ loop.index }}">
 						<div class="imageContainer">
-							{% if row['gender'] == 'female' %}
+							<!-- {% if row['profile_pic == "none" '] %}
+								{% if row['gender'] == 'female' %}
+								<img src="https://img.freepik.com/free-vector/doctor-background-design_1270-62.jpg?size=626&ext=jpg"
+									alt="" id="file-ip-1-preview">
+								{% elif row['gender'] == 'other'%}
+								<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BrvftUuObhVHhlrmMAAMFwHaHa%26pid%3DApi&f=1&ipt=fa3ccaf1994c59a6369dd391c55459e78fc2b1d755d8c44e50e6be8dc2532921&ipo=images"
+									alt="" id="file-ip-1-preview">
+								{% else %}
+								<img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=626&ext=jpg"
+									alt="" id="file-ip-1-preview">
+								{% endif %}
+							{% else %}
+							<img src="/{{row['profile_pic']}}"
+							alt="" id="file-ip-1-preview">
+							{% endif %} -->
+
+							{% if row['gender'] == 'female' and row['profile_pic'] == None %}
 							<img src="https://img.freepik.com/free-vector/doctor-background-design_1270-62.jpg?size=626&ext=jpg"
 								alt="" id="file-ip-1-preview">
-							{% elif row['gender'] == 'other'%}
+							{% elif row['gender'] == 'other' and row['profile_pic'] == None %}
 							<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BrvftUuObhVHhlrmMAAMFwHaHa%26pid%3DApi&f=1&ipt=fa3ccaf1994c59a6369dd391c55459e78fc2b1d755d8c44e50e6be8dc2532921&ipo=images"
 								alt="" id="file-ip-1-preview">
-							{% else %}
+							{% elif row['gender'] == 'male' and row['profile_pic'] == None %}
 							<img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=626&ext=jpg"
 								alt="" id="file-ip-1-preview">
+							{% elif row['profile_pic'] != NULL %}
+							<img src="/{{row['profile_pic']}}" alt="" id="file-ip-1-preview">
 							{% endif %}
 					</label>
 				</div>
-				<input type="file" id="file-ip-{{ loop.index }}" accept="image/*" onchange="showPreview(event);">
+				<input name="file" type="file" id="file-ip-{{ loop.index }}" accept="image/*" onchange="showPreview(event);">
 			</div>
 		</div>
 		<div class="textarea">
-			<textarea name="" id="" placeholder="Write the Specialization"></textarea>
+			<textarea name="" id="" placeholder="Write the Specialization">{{row['specialization']}}</textarea>
+			<input type="hidden" value="{{row['doctor_id']}}">
 		</div>
-		<div>
+		<div class="buttons-div">
 			{% if row['usertype'] == 'Pending' %}
 			<a href="/admin/viewdoctors?id1={{row['login_id']}}" style="text-decoration: none"
 				class="btn btn-primary">Accept</a>
 			<a href="/admin/viewdoctors?id2={{row['login_id']}}" style="text-decoration: none"
-				class="btn btn-primary">Reject</a>
+				class="btn btn-primary">Reject</a>`
+			{% elif row['usertype']=='Request Reject' %}
+			<a href="/admin/viewdoctors?id3={{row['login_id']}}" style="text-decoration: none"
+				class="btn btn-primary">Unblock</a>`
 			{% endif %}
-			<button class="btn btn-success">Save</button>
-			<button class="btn btn-danger">Delete</button>
+			<button class="btn btn-success" onclick="save(event)">Save</button>
+			<a href="?action=delete&id={{row['doctor_id']}}&id1={{row['login_id']}}" class="btn btn-sm btn-danger"
+				style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>
 		</div>
 	</div>
 	{% endfor %}
@@ -159,6 +183,7 @@ h1{
 
 
 </body>
+<script src="/static/js/toast.js"></script>
 <script>
 	function showPreview(event) {
 		if (event.target.files.length > 0) {
@@ -171,5 +196,71 @@ h1{
 			preview.style.display = "block";
 		}
 	}
+	function save(event) {
+		var parentdiv = event.target.parentNode.parentNode;
+		// console.log(parentdiv);
+		let text = parentdiv.children[1].children[0].value;
+		let docId = parentdiv.children[1].children[1].value;
+
+		var fd = new FormData();
+		var files = event.target.parentNode.parentNode.children[0].children[1].children[0].children[1].files[0];
+		if (files != null){
+			fd.append('file', files);
+		}
+		fd.append('text', text);
+		fd.append('docid', docId);
+		// ajax starts
+		$.ajax({
+			type: "POST",
+			url: "save",
+			data: fd,
+			processData: false,
+			contentType: false,
+			success: function (tex) {
+				if ( tex == "bothSuccess"){
+					Success();
+				}
+				else if(tex == "text"){
+					Success();
+				}
+				else if(tex == "error") {
+					ErrorCase();
+				}
+			}
+		});
+		// ajax ends
+	}
+	function Success() {
+		toastNotif({
+			text: 'Saved Successfully',
+			color: '#5bc83f',
+			timeout: 3000,
+			icon: 'valid'
+		});
+	}
+	function Warring1() {
+		toastNotif({
+			text: 'Specialization Updated',
+			color: '#ebb73f',
+			timeout: 3000,
+			icon: 'warring'
+		});
+	}
+	function Warring2() {
+		toastNotif({
+			text: 'Image Uploaded',
+			color: '#ebb73f',
+			timeout: 3000,
+			icon: 'warring'
+		});
+	}
+	function ErrorCase() {
+		toastNotif({
+			text: 'Something went wrong !',
+			color: '#da4848',
+			timeout: 3000,
+			icon: 'error'
+		});
+	}	
 </script>
 {% include 'footer.html' %}

@@ -97,7 +97,7 @@ def doctors_register():
             q = "insert into login values(null,'%s','%s','Pending')" % (
                 uname, password)
             res = insert(q)
-            q = "insert into doctors values(null,'%s','%s','%s','%s','%s','%s','%s',null)" % (
+            q = "insert into doctors values(null,'%s','%s','%s','%s','%s','%s','%s',null,null)" % (
                 res, fname, lname, qual, phone, email, gender)
             insert(q)
             flash("Registered successfully")

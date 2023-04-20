@@ -28,7 +28,8 @@
     <link rel="stylesheet" href="/static/css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/custom.css">
-
+    <!-- Toast CSS -->
+    <link rel="stylesheet" href="/static/css/toast.css">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -37,12 +38,12 @@
 </head>
 
 <body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98" style="background-image: url();">
-<style>
-    li a{
-        display: block;
-        width: 100%;
-    }
-</style>
+    <style>
+        li a {
+            display: block;
+            width: 100%;
+        }
+    </style>
     <!-- LOADER -->
     <div id="preloader">
         <div class="loader">
@@ -83,7 +84,7 @@
                                 <li><a href="/admin/view_feedbacks">Feedbacks</a></li>
                                 <li><a href="/admin/view_orderedmedicine">Delivery Status</a></li>
                                 <li><a href="/admin/view_rooms">Rooms</a></li>
-                                
+
                             </ul>
                         </li>
                     </ul>
@@ -109,25 +110,25 @@
     {% endwith %}
 
     <script language="JavaScript" type="text/javascript">
-        function confirmLogout(){
-        var agree = confirm("Are you sure want to Logout?");
-        if(agree){
-            return true;
-        }else{
-            return false;
-        }
+        function confirmLogout() {
+            var agree = confirm("Are you sure want to Logout?");
+            if (agree) {
+                return true;
+            } else {
+                return false;
+            }
         }
         window.history.forward();
-    
-    function noBack() {
-        window.history.forward();
-    }
-    
-    // Disable back button on all browsers
-    window.onload = function() {
-        setTimeout(noBack(), 0);
-        window.onpageshow = function(evt) { if (evt.persisted) noBack(); };
-        window.onunload = function() { void (0); };
-    };
-    
+
+        function noBack() {
+            window.history.forward();
+        }
+
+        // Disable back button on all browsers
+        window.onload = function () {
+            setTimeout(noBack(), 0);
+            window.onpageshow = function (evt) { if (evt.persisted) noBack(); };
+            window.onunload = function () { void (0); };
+        };
+
     </script>

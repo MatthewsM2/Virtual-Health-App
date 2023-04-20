@@ -55,6 +55,11 @@ def viewdoctors():
         q = "UPDATE login SET usertype='Request Reject' WHERE login_id='%s' AND usertype='Pending'" % id2
         update(q)
         return redirect(url_for('admin.viewdoctors'))
+    elif 'id3' in request.args:
+        id3 = request.args['id3']
+        q = "UPDATE login SET usertype='Pending' WHERE login_id='%s' AND usertype='Request Reject'" % id3
+        update(q)
+        return redirect(url_for('admin.viewdoctors'))
     return render_template('adview_doctors.html', data=data)
 
 
@@ -252,12 +257,64 @@ def assign_doc():
         doc = int(request.form['doctor-name'])
         date = request.form['date-value']
         time = int(request.form['time-value'])
-        q="select * from assign_doc where doctor_id = '%s' and date = '%s' and time_slot = '%s' "%(doc, date, time)
-        res=select(q)
+        q = "select * from assign_doc where doctor_id = '%s' and date = '%s' and time_slot = '%s' " % (
+            doc, date, time)
+        res = select(q)
         if res:
             flash("Already Added")
         else:
-            q = "insert into assign_doc (doctor_id, date, time_slot) values ('%s','%s','%s')"%(doc, date, time)       
+            q = "insert into assign_doc (doctor_id, date, time_slot) values ('%s','%s','%s')" % (
+                doc, date, time)
             insert(q)
             flash("values are inserted")
     return render_template('adassign_doctors.html', data=data)
+
+
+# @admin.route('/save', methods=['get', 'post'])
+# def save():
+#     data = {}
+#     text = request.form['text']
+#     docId = request.form['docid']
+#     if request.files['file']:
+#      picfile = request.files['file']
+#      filename = 'static/images/dB_Images/dbImg'+picfile.filename
+#      picfile.save(filename)
+#      q="UPDATE `doctors` SET `profile_pic` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+#         filename, docId)
+#      insert(q)
+#      q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+#         text, docId)
+#      insert (q)
+#      return "bothSuccess"
+#     else: 
+#      q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+#         text, docId)
+#      insert (q)
+#      return "text"
+@admin.route('/save', methods=['GET', 'POST'])
+def save():
+    data = {}
+    text = request.form['text']
+    docId = request.form['docid']
+
+    if 'file' in request.files:
+        picfile = request.files['file']
+        filename = 'static/images/dB_Images/dbImg' + picfile.filename
+        picfile.save(filename)
+
+        q = "UPDATE `doctors` SET `profile_pic` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (filename, docId)
+        insert(q)
+
+    q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (text, docId)
+    insert(q)
+
+    if 'file' in request.files:
+        return "bothSuccess"
+    else:
+        return "text"
+
+    
+    # text=request.files['text']
+    # docId=request.files['docId']
+        
+        
