@@ -1,104 +1,53 @@
 {% include 'adminheader.html' %}
 <style type="text/css">
-        /*.container{
-            text-align: center;
-            background-color: rgb(99, 109, 109);
-            padding: 100px;
-        }*/
-        table{
-            width: 50%;
-            padding: 12px;
-            border-radius: 4px;
-            resize: vertical;
-            color: black;
-            font-style: bold;
-            font-family:Calibri;
-            font-size: 20px;
-        }
-        tr{
-        	width: 90%;
-            padding: 12px;
-            border-radius: 4px;
-            resize: vertical;
-            color: black;
-            font-style: bold;
-            font-family:Calibri;
-            font-size: 20px;
-        }
-        th{
-        	width: 20%;
-            padding: 12px;
-            border-radius: 4px;
-            resize: vertical;
-            color: black;
-            font-style: bold;
-            font-family:Calibri;
-            font-size: 20px;
+    form {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
 
-        }
-        td{
-        	width: 90%;
-            padding: 12px;
-            border-radius: 4px;
-            resize: vertical;
-            color: black;
-            font-style: bold;
-            font-family:Calibri;
-            font-size: 20px;
+    .body-div {
+        height: 84vh;
+    }
 
-        }
-        input[type=text]{
-            width: 90%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
-        input[type=password]{
-            width: 90%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
+    .grp-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 77vh;
+        min-height: 47vh;
+        border-radius: 2vh;
+        padding: 4vh;
+        gap: 2rem;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    }
 
-        }
+    .form-outline {
+        height: 3rem;
+    }
+</style>
 
-        input[type=submit]
-        {
-            width: 20%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
 
-       
-    </style>
-    <body style="background-image: url(/static/images/gallery-02.jpg);">
+<body style="background-image: url(/static/images/gallery-02.jpg);">
+    <div class="body-div">
         <form method="post">
-        	<br><br><br>
+            <div class="grp-div">
+                <h1>Add Rooms</h1>
+                <div class="form-outline">
+                    <input name="rname" type="text" id="formControlLg" class="form-control form-control-lg" autocomplete="off"  />
+                    <label class="form-label" for="formControlLg">Room Name</label>
+                </div>
+                <div class="btn-group">
+                    <input name="status" value="Reserved" type="radio" class="btn-check" name="options" id="option1" autocomplete="off" />
+                    <label class="btn btn-secondary"  for="option1">Occupied</label>
 
-<!--         	<h1 align="center"><font size="20" color="blue">Sign In</font></h1>
- -->           <table  align="Center">
-           	<tr class="tr">
-           		<th>Room Name</th>
-           		<td class="td">
-           			<input type="text" name="rname" required="" placeholder="Enter Room Name">
-           		</td>
-           	</tr>
-           	<tr class="tr">
-           		<th>Room Status</th>
-           		<td class="td">
-           			<input type="radio"  name="status" required="" value="Reserved">&nbsp; Reserved &nbsp;
-           			<input type="radio"  name="status" required="" value="Not Reserved">&nbsp; Not Reserved &nbsp;
-           		</td>
-           	</tr>
-           	<tr class="tr">
-           		<td colspan="2" align="center" class="td">
-           			<input type="submit" name="submit" value="Sign In" class="btn btn-primary">
-           		</td>
-           	</tr>
-           </table>
-            
+                    <input name="status" value="Not Reserved" type="radio" class="btn-check" name="options" id="option2" autocomplete="off" checked/>
+                    <label class="btn btn-secondary" for="option2">Vacant</label>
+                </div>
+                <input name="submit" class="btn btn-primary" type="submit" value="Submit" />
+            </div>
+            <!-- rname,status,submit -names -->
         </form>
-{% include 'footer.html' %}
+    </div>
+    {% include 'admin_footer.html' %}
