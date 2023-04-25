@@ -1,25 +1,54 @@
 {% include 'adminheader.html' %}
+<style>
+    .body-div {
+        height: 77vh;
+    }
+
+    .form-body {
+        display: flex;
+        flex-direction: column;
+        gap: 5vh;
+        width: 100vh;
+        margin: 7vh auto;
+        background-color: #ffffff;
+        padding: 7vh;
+        border-radius: 2vh;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    input[type=date]{
+        padding: 0.375rem 0.25rem 0.375rem 0.75rem;
+        font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #4f4f4f;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
+    appearance: none;
+    outline-color: #3B71CA;
+    }
+</style>
 
 <body style="background-image: url(/static/images/gallery-02.jpg);">
-    <form method="post">
-        <br><br><br>
-        <!--<h1 align="center"><font size="20" color="blue">Sign In</font></h1>
- --> <select name="doctor-name" class="form-select" aria-label="Default select example" required>
-            <option selected value="">Select Doctor</option>
-            {% for row in data['doc'] %}
-            <option value="{{row['doctor_id']}}">{{row['first_name']+' '+row['last_name']}}</option>
-            {% endfor %}
-        </select>
-        date
-        <input name="date-value" type="date" required>
-        <select name="time-value" class="form-select" aria-label="Default select example" required>
-            <option selected value="">Select Available Time</option>
-            <option value="809">08:00 Am - 09:00 Am</option>
-            <option value="1011">10:00 Am - 11:00 Am</option>
-            <option value="1201">12:00 Pm - 01:00 Pm</option>
-            <option value="203">02:00 Pm - 03:00 Pm</option>
-            <option value="405">04:00 Pm - 05:00 Pm</option>
-        </select>
-        <input name="submit" type="submit" value="submit">
-    </form>
+    <div class="body-div">
+        <form method="post" class="form-body">
+            <h1>Assign Doctor</h1>
+            <select name="doctor-name" class="form-select" aria-label="Default select example" required>
+                <option selected value="">Select Doctor</option>
+                {% for row in data['doc'] %}
+                <option value="{{row['doctor_id']}}">{{row['first_name']+' '+row['last_name']}}</option>
+                {% endfor %}
+            </select>
+            <input name="date-value" type="date" required>
+            <select name="time-value" class="form-select" aria-label="Default select example" required>
+                <option selected value="">Select Available Time</option>
+                <option value="809">08:00 Am - 09:00 Am</option>
+                <option value="1011">10:00 Am - 11:00 Am</option>
+                <option value="1201">12:00 Pm - 01:00 Pm</option>
+                <option value="203">02:00 Pm - 03:00 Pm</option>
+                <option value="405">04:00 Pm - 05:00 Pm</option>
+            </select>
+            <button name="submit" type="submit" class="btn btn-primary btn-block mb-3">Submit</button>
+        </form>
+    </div>
     {% include 'admin_footer.html' %}

@@ -1,123 +1,5 @@
 {% include 'adminheader.html' %}
 <style type="text/css">
-    /* Dropdown Button */
-    /* .wrapper{
-  width: 370px;
-  margin: 85px auto 0;
-}
-.select-btn, li{
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.select-btn{
-  height: 65px;
-  padding: 0 20px;
-  font-size: 22px;
-  background: #fff;
-  border-radius: 7px;
-  justify-content: space-between;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-.select-btn i{
-  font-size: 31px;
-  transition: transform 0.3s linear;
-} */
-    .select-btn {
-        width: 100%;
-        padding: 2vh;
-    }
-
-    .wrapper.active .select-btn i {
-        transform: rotate(-180deg);
-    }
-
-    .content {
-        display: none;
-        padding: 20px;
-        margin-top: 15px;
-        background: #fff;
-        border-radius: 7px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .wrapper.active .content {
-        display: block;
-    }
-
-    .content .search {
-        position: relative;
-    }
-
-    .search i {
-        top: 50%;
-        left: 15px;
-        color: #999;
-        pointer-events: none;
-        transform: translateY(-50%);
-        position: absolute;
-    }
-
-    .search input {
-        /* height: 50px; */
-        width: 100%;
-        outline: none;
-        border-radius: 5px;
-        padding: 0 20px 0 43px;
-        border: 1px solid #B3B3B3;
-    }
-
-    .search input:focus {
-        /* padding-left: 42px; */
-        border: 2px solid #4285f4;
-    }
-
-    .search input::placeholder {
-        color: #bfbfbf;
-    }
-
-    .content .options {
-        margin-top: 10px;
-        max-height: 250px;
-        overflow-y: auto;
-        padding-right: 7px;
-    }
-
-    .options::-webkit-scrollbar {
-        width: 7px;
-    }
-
-    .options::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 25px;
-    }
-
-    .options::-webkit-scrollbar-thumb {
-        background: #ccc;
-        border-radius: 25px;
-    }
-
-    .options::-webkit-scrollbar-thumb:hover {
-        background: #b3b3b3;
-    }
-
-    .options li {
-        /* height: 50px; */
-        padding: 0 13px;
-    }
-
-    .options li:hover,
-    li.selected {
-        border-radius: 5px;
-        background: #f2f2f2;
-    }
-
-    .content {
-        position: absolute;
-        z-index: 9;
-        width: 86vh;
-    }
-
     .form-body {
         display: flex;
         flex-direction: column;
@@ -133,134 +15,18 @@
 
 <body style="background-image: url(/static/images/gallery-02.jpg);">
     <form method="post" class="form-body">
-
-        <!--         	<h1 align="center"><font size="20" color="blue">Sign In</font></h1>
- -->
-        <!-- <select name="rname">
-                        <option>Select</option>
-                        {% for row in data['ro'] %}
-                        <option value="{{row['room_id']}}">{{row['room_name']}}</option>
-                        {% endfor %}
-                    </select> -->
-        <!-- <div class="container">
-                        <div class="row">
-                            <form class="col-md-4"
-                                   </form>
-                        </div>
-                    </div>
-            <tr class="tr">
-                <th>First Name</th>
-                <td class="td">
-                    <input type="text" name="fname" required="" placeholder="Enter Firstname">
-                </td>
-            </tr>
-            <tr class="tr">
-                <th>Last Name</th>
-                <td class="td">
-                    <input type="text" name="lname" required="" placeholder="Enter Lastname">
-                </td>
-            </tr>
-            <tr class="tr">
-                <th>Age</th>
-                <td class="td">
-                    <input type="number" name="age" required="" placeholder="Enter Age">
-                </td>
-            </tr>
-            <tr class="tr">
-                <th>Gender</th>
-                <td class="td">
-                    <input type="radio" name="gender" required="" value="male">Male
-                    <input type="radio" name="gender" required="" value="female">Female
-                </td>
-            </tr>
-            <tr class="tr">
-                <th>Phone</th>
-                <td class="td">
-                    <input type="text" name="phone" required="" placeholder="Enter Contact Number" pattern="[0-9]{10}">
-                </td>
-            </tr>
-            <tr class="tr">
-                <th>Email</th>
-                <td class="td">
-                    <input type="email" name="email" required="" placeholder="Enter Email-ID">
-                </td>
-            </tr>
-            <tr class="tr">
-                <th>Address</th>
-                <td class="td">
-                    <textarea name="address" required="">
-
-                    </textarea>
-                </td>
-            </tr>
-            <tr class="tr">
-                <th>Username</th>
-                <td class="td">
-                    <input type="text" name="uname" required="" placeholder="Enter Username">
-                </td>
-            </tr>
-            <tr class="tr">
-                <th><b>Password</b></th>
-                <td class="td">
-                    <input type="password" placeholder="Enter Password" name="password" required="">
-                </td>
-            </tr>
-            <tr class="tr">
-                <td colspan="2" align="center" class="td">
-                    <input type="submit" name="submit" value="Register" class="btn btn-primary">
-                </td>
-            </tr>
-        </table> -->
-        <!-- <div class="wrapper">
-            <div class="btn  dropdown-toggle select-btn">
-                <span>Select Country</span>
-                <i class="uil uil-angle-down"></i>
-            </div>
-            <div class="content">
-                <div class="search">
-                    <i class="dropdown-menu uil uil-search"></i>
-                    <input spellcheck="false" type="text" placeholder="Search" required>
-                </div>
-                <ul class="options"></ul>
-            </div>
-        </div> -->
-        <!-- <div class="form-group">
-            <select class="mdb-select md-form" searchable="Search here..">
-                <option value="" disabled selected>Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-                <option value="4">Option 4</option>
-                <option value="5">Option 5</option>
-            </select>
-            <label>Select</label>
-        </div> -->
-        <!-- <div class="input-group mb-3">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select an option</option>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
-              <option value="5">Option 5</option>
-              <option value="6">Option 6</option>
-            </select>
-            <div class="input-group-append">
-              <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
-            </div>
-          </div> -->
-          <h1>Add Patients</h1>
+        <h1>Add Patients</h1>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
         <div class="form-group">
-  <label for="exampleSelect"></label>
-  <select name="rname" class="form-control select2" id="exampleSelect">
-    <option selected>Select Room</option>
-   {% for row in data['ro'] %}
-                        <option value="{{row['room_id']}}">{{row['room_name']}}</option>
-                        {% endfor %}
-  </select>
-</div>
+            <label for="exampleSelect"></label>
+            <select name="rname" class="form-control select2" id="exampleSelect">
+                <option selected>Select Room</option>
+                {% for row in data['ro'] %}
+                <option value="{{row['room_id']}}">{{row['room_name']}}</option>
+                {% endfor %}
+            </select>
+        </div>
         <script>
             $(document).ready(function () {
                 $('.js-example-basic-single').select2();
@@ -276,22 +42,25 @@
             <label class="form-label" for="formControlLg">Last Name</label>
         </div>
         <div class="form-outline">
-            <input name="age" type="number" id="formControlLg" class="form-control form-control-lg" required min="1" max="150"/>
-            <label class="form-label" for="formControlLg" >Age</label>
+            <input name="age" type="number" id="formControlLg" class="form-control form-control-lg" required min="1"
+                max="150" />
+            <label class="form-label" for="formControlLg">Age</label>
         </div>
         <div class="btn-group">
             <input name="gender" type="radio" class="btn-check" name="options" id="option1" autocomplete="off" />
             <label class="btn btn-secondary" for="option1">Male</label>
 
-            <input name="gender" type="radio" class="btn-check" name="options" id="option2" autocomplete="off" required />
+            <input name="gender" type="radio" class="btn-check" name="options" id="option2" autocomplete="off"
+                required />
             <label class="btn btn-secondary" for="option2">Female</label>
 
             <input name="gender" type="radio" class="btn-check" name="options" id="option3" autocomplete="off" />
             <label class="btn btn-secondary" for="option3">Others</label>
         </div>
         <div class="form-outline">
-            <input name="phone" type="text" id="formControlLg" class="form-control form-control-lg" pattern="[789][0-9]{9}" required />
-            <label class="form-label" for="formControlLg">Phone Number</label>
+            <input name="phone" type="text" id="formControlLg" class="form-control form-control-lg"
+                pattern="[789][0-9]{9}" required />
+            <label class="form-label" for="formControlLg">Mobile Number</label>
         </div>
         <div class="form-outline">
             <input name="email" type="email" id="formControlLg" class="form-control form-control-lg" required />
@@ -299,8 +68,8 @@
         </div>
         <div class="form-group shadow-textarea">
             <label for="exampleFormControlTextarea6"></label>
-            <textarea name="address" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Address"
-                required></textarea>
+            <textarea name="address" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3"
+                placeholder="Address" required></textarea>
         </div>
         <div class="form-outline">
             <input name="uname" type="text" id="formControlLg" class="form-control form-control-lg" required />
@@ -314,54 +83,3 @@
 
     </form>
     {% include 'admin_footer.html' %}
-    <!-- <script>
-        $(document).ready(function() {
-            // Initialize MDB Select
-            $('.mdb-select').mdbSelect();
-        });
-    </script> -->
-    <!-- <script>
-
-        
-        const wrapper = document.querySelector(".wrapper"),
-            selectBtn = wrapper.querySelector(".select-btn"),
-            searchInp = wrapper.querySelector("input"),
-            options = wrapper.querySelector(".options");
-        let countries = ["Afghanistan", "Algeria", "Argentina", "Australia", "Bangladesh", "Belgium", "Bhutan",
-            "Brazil", "Canada", "China", "Denmark", "Ethiopia", "Finland", "France", "Germany",
-            "Hungary", "Iceland", "India", "Indonesia", "Iran", "Italy", "Japan", "Malaysia",
-            "Maldives", "Mexico", "Morocco", "Nepal", "Netherlands", "Nigeria", "Norway", "Pakistan",
-            "Peru", "Russia", "Romania", "South Africa", "Spain", "Sri Lanka", "Sweden", "Switzerland",
-            "Thailand", "Turkey", "Uganda", "Ukraine", "United States", "United Kingdom", "Vietnam"];
-
-        function addCountry(selectedCountry) {
-            options.innerHTML = "";
-            countries.forEach(country => {
-                let isSelected = country == selectedCountry ? "selected" : "";
-                let li = `<li onclick="updateName(this)" class="${isSelected}">${country}</li>`;
-                options.insertAdjacentHTML("beforeend", li);
-            });
-        }
-        addCountry();
-
-        function updateName(selectedLi) {
-            searchInp.value = "";
-            addCountry(selectedLi.innerText);
-            wrapper.classList.remove("active");
-            selectBtn.firstElementChild.innerText = selectedLi.innerText;
-        }
-
-        searchInp.addEventListener("keyup", () => {
-            let arr = [];
-            let searchWord = searchInp.value.toLowerCase();
-            arr = countries.filter(data => {
-                return data.toLowerCase().startsWith(searchWord);
-            }).map(data => {
-                let isSelected = data == selectBtn.firstElementChild.innerText ? "selected" : "";
-                return `<li onclick="updateName(this)" class="${isSelected}">${data}</li>`;
-            }).join("");
-            options.innerHTML = arr ? arr : `<p style="margin-top: 10px;">Oops! Country not found</p>`;
-        });
-
-        selectBtn.addEventListener("click", () => wrapper.classList.toggle("active"));
-    </script> -->

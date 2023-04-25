@@ -253,20 +253,20 @@ def assign_doc():
     res = select(q)
     data['doc'] = res
 
-    if 'submit' in request.form:
-        doc = int(request.form['doctor-name'])
-        date = request.form['date-value']
-        time = int(request.form['time-value'])
-        q = "select * from assign_doc where doctor_id = '%s' and date = '%s' and time_slot = '%s' " % (
-            doc, date, time)
-        res = select(q)
-        if res:
-            flash("Already Added")
-        else:
-            q = "insert into assign_doc (doctor_id, date, time_slot) values ('%s','%s','%s')" % (
-                doc, date, time)
-            insert(q)
-            flash("values are inserted")
+    # if 'submit' in request.form:
+    #     doc = int(request.form['doctor-name'])
+    #     date = request.form['date-value']
+    #     time = int(request.form['time-value'])
+    #     q = "select * from assign_doc where doctor_id = '%s' and date = '%s' and time_slot = '%s' " % (
+    #         doc, date, time)
+    #     res = select(q)
+    #     if res:
+    #         flash("Already Added")
+    #     else:
+    #         q = "insert into assign_doc (doctor_id, date, time_slot) values ('%s','%s','%s')" % (
+    #             doc, date, time)
+    #         insert(q)
+    #         flash("values are inserted")
     return render_template('adassign_doctors.html', data=data)
 
 
