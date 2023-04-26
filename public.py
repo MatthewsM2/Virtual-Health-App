@@ -21,15 +21,15 @@ def index():
 
     time = {"tim": []}
     for row in res:
-        if row['time_slot'] == 809:  # replace with your condition
+        if row['time_slot'] == 8:  # replace with your condition
             time['tim'].append({'real': "08:00 Am - 09:00 Am", 'val': 809})
-        elif row['time_slot'] == 1011:
+        elif row['time_slot'] == 10:
             time['tim'].append({'real': "10:00 Am - 11:00 Am", 'val': 1011})
-        elif row['time_slot'] == 1201:
+        elif row['time_slot'] == 12:
             time['tim'].append({'real': "12:00 Pm - 01:00 Pm", 'val': 1201})
-        elif row['time_slot'] == 203:
+        elif row['time_slot'] == 2:
             time['tim'].append({'real': "02:00 Pm - 03:00 Pm", 'val': 203})
-        elif row['time_slot'] == 405:
+        elif row['time_slot'] == 4:
             time['tim'].append({'real': "04:00 Pm - 05:00 Pm", 'val': 405})
     # time_ranges = {
     # 809: "08:00 Am - 09:00 Am",

@@ -15,40 +15,176 @@
         border-radius: 2vh;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
-    input[type=date]{
+
+    input[type=date] {
         padding: 0.375rem 0.25rem 0.375rem 0.75rem;
         font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.6;
-    color: #4f4f4f;
-    border: 1px solid #bdbdbd;
-    border-radius: 0.25rem;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
-    appearance: none;
-    outline-color: #3B71CA;
+        font-weight: 400;
+        line-height: 1.6;
+        color: #4f4f4f;
+        border: 1px solid #bdbdbd;
+        border-radius: 0.25rem;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075);
+        appearance: none;
+        outline-color: #3B71CA;
     }
 </style>
 
 <body style="background-image: url(/static/images/gallery-02.jpg);">
     <div class="body-div">
-        <form method="post" class="form-body">
+        <form method="post" class="form-body" onsubmit="subValues()">
             <h1>Assign Doctor</h1>
-            <select name="doctor-name" class="form-select" aria-label="Default select example" required>
-                <option selected value="">Select Doctor</option>
+            <select id="AssignDoctor-id" name="doctor-name" class="form-select"
+                aria-label="Default select example required" required onchange="docChange()">
+                <option selected value="000">Select Doctor</option>
                 {% for row in data['doc'] %}
                 <option value="{{row['doctor_id']}}">{{row['first_name']+' '+row['last_name']}}</option>
                 {% endfor %}
             </select>
-            <input name="date-value" type="date" required>
-            <select name="time-value" class="form-select" aria-label="Default select example" required>
-                <option selected value="">Select Available Time</option>
-                <option value="809">08:00 Am - 09:00 Am</option>
-                <option value="1011">10:00 Am - 11:00 Am</option>
-                <option value="1201">12:00 Pm - 01:00 Pm</option>
-                <option value="203">02:00 Pm - 03:00 Pm</option>
-                <option value="405">04:00 Pm - 05:00 Pm</option>
+            <input name="date-value" type="date" required minDate="0" id="date_picker" disabled onchange="dateChange()">
+            <select id="my-select" name="time-value" class="form-select" aria-label="Default select example" required>
+                <option selected value="" disabled>Select Available Time</option>
+                <!-- <option value="08">08:00 Am - 09:00 Am</option>
+                <option value="10">10:00 Am - 11:00 Am</option>
+                <option value="12">12:00 Pm - 01:00 Pm</option>
+                <option value="02">02:00 Pm - 03:00 Pm</option>
+                <option value="04">04:00 Pm - 05:00 Pm</option> -->
             </select>
             <button name="submit" type="submit" class="btn btn-primary btn-block mb-3">Submit</button>
         </form>
     </div>
     {% include 'admin_footer.html' %}
+    <script>
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        $('#date_picker').attr('min', today);
+        var actualVal = [08, 10, 12, 02, 04];
+        function docChange() {
+            var dateP = $("#date_picker");
+            dateP.prop("disabled", false);
+            let doc = $("#AssignDoctor-id").val();
+            $('#my-select option').remove();
+            var selectElement = $("#my-select");
+            selectElement.append($('<option>', {
+                text: 'Select Available Time',
+                disabled: true,
+                selected: true
+            }));
+            if (doc == 000) {
+                $('#date_picker').val('');
+                dateP.prop("disabled", true);
+            }
+        }
+        function dateChange() {
+            $('#my-select option').remove();
+            let doc = $("#AssignDoctor-id").val();
+            let day = $("#date_picker").val();
+            let selectElement = $('#my-select');
+            $.ajax({
+                type: "POST",
+                url: "admin_assign_doc_check_date",
+                data: { 'doctor_id': doc, 'date': day },
+                success: function (result) {
+                    var timeSlots = [];
+                    for (var i = 0; i < result.length; i++) {
+                        timeSlots.push(result[i].time_slot);
+                    }
+                    // console.log(timeSlots);
+                    // Find the difference between array1 and array2
+                    var diffArray = actualVal.filter(function (element) {
+                        return !timeSlots.includes(element);
+                    });
+                    // console.log(diffArray);
+                    if (diffArray != null) {
+                        for (var i = 0; i < diffArray.length; i++) {
+                            switch (diffArray[i]) {
+                                case 08:
+                                    selectElement.append($('<option>', {
+                                        value: '08',
+                                        text: '08:00 Am - 09:00 Am'
+                                    }));
+                                    break;
+                                case 10:
+                                    selectElement.append($('<option>', {
+                                        value: '10',
+                                        text: '10:00 Am - 11:00 Am'
+                                    }));
+                                    break;
+                                case 12:
+                                    selectElement.append($('<option>', {
+                                        value: '12',
+                                        text: '12:00 Pm - 01:00 Pm'
+                                    }));
+                                    break;
+                                case 02:
+                                    selectElement.append($('<option>', {
+                                        value: '02',
+                                        text: '02:00 Pm - 03:00 Pm'
+                                    }));
+                                    break;
+                                case 04:
+                                    selectElement.append($('<option>', {
+                                        value: '04',
+                                        text: '04:00 Pm - 05:00 Pm'
+                                    }));
+                                    break;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        function subValues() {
+            let doc = $("#AssignDoctor-id").val();
+            let day = $("#date_picker").val();
+            let selectElement = $('#my-select').val();
+            //  $.ajax({
+            //     type: "POST",
+            //     url: "assignsave_doc",
+            //     data: { 'docto_id': doc,'date':day,'select':selectElement },
+            //     success: function (result) {
+            //         if(result==1){
+            //             console.log("success");
+            //         }else{
+            //             console.log("hgfh")
+            //         }
+            //     }
+            // });
+            $.ajax({
+                type: "POST",
+                url: "assignsave_doc",
+                data: { 'doctor_id': doc, 'date': day, 'select': selectElement },
+                success: function (result) {
+                    if (result == 1) {
+                        Success();
+                        dateChange()
+                    } else {
+                        ErrorCase();
+                        dateChange()
+                    }
+                }
+            });
+
+            event.preventDefault();
+        }
+        function Success() {
+            toastNotif({
+                text: 'Saved Successfully',
+                color: '#5bc83f',
+                timeout: 3000,
+                icon: 'valid'
+            });
+        }
+        function ErrorCase() {
+            toastNotif({
+                text: 'Something went wrong !',
+                color: '#da4848',
+                timeout: 3000,
+                icon: 'error'
+            });
+        }
+    </script>
+    <script src="/static/js/toast.js"></script>

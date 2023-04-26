@@ -269,28 +269,69 @@ def assign_doc():
     #         flash("values are inserted")
     return render_template('adassign_doctors.html', data=data)
 
+# assign_doc ajax urls are below
+# first function date checking using doc_id
 
-# @admin.route('/save', methods=['get', 'post'])
-# def save():
-#     data = {}
-#     text = request.form['text']
-#     docId = request.form['docid']
-#     if request.files['file']:
-#      picfile = request.files['file']
-#      filename = 'static/images/dB_Images/dbImg'+picfile.filename
-#      picfile.save(filename)
-#      q="UPDATE `doctors` SET `profile_pic` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
-#         filename, docId)
-#      insert(q)
-#      q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
-#         text, docId)
-#      insert (q)
-#      return "bothSuccess"
-#     else: 
-#      q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
-#         text, docId)
-#      insert (q)
-#      return "text"
+
+@admin.route('/admin_assign_doc_check_date', methods=['get', 'post'])
+def admin_assign_doc_check_date():
+    docId = request.form['doctor_id']
+    date = request.form['date']
+#  q="SELECT DISTINCT DATE(date) AS date FROM assign_doc WHERE doctor_id = '%s' AND DATE_FORMAT(date, '%i') DIV 3 = 0" %(docId)
+    q = "select time_slot from assign_doc where doctor_id = '%s' and date = '%s' " % (
+        docId, date)
+    res = select(q)
+    return (res)
+
+
+# @admin.route('/assignsave_doc', methods=['get', 'post'])
+# def assignsave_doc():
+#     print(request.form)
+#     docId = request.form['doctor_id']
+#     date = request.form['date']
+#     sel = request.form['select']
+#     q = "insert into assign_doc (doctor_id, date, time_slot) values ('%s','%s','%s')" % (
+#     docId, date, sel)
+#     insert(q)
+#     return (1)
+@admin.route('/assignsave_doc', methods=['GET', 'POST'])
+def assignsave_doc():
+    try:
+        docId = request.form['doctor_id']
+        date = request.form['date']
+        sel = request.form['select']
+        q = "INSERT INTO assign_doc (doctor_id, date, time_slot) VALUES ('%s', '%s', '%s')" % (docId, date, sel)
+        insert(q)
+        return '1'
+    except KeyError as e:
+        return f'Error: {e}'
+
+
+        # @admin.route('/save', methods=['get', 'post'])
+        # def save():
+        #     data = {}
+        #     text = request.form['text']
+        #     docId = request.form['docid']
+        #     if request.files['file']:
+        #      picfile = request.files['file']
+        #      filename = 'static/images/dB_Images/dbImg'+picfile.filename
+        #      picfile.save(filename)
+        #      q="UPDATE `doctors` SET `profile_pic` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+        #         filename, docId)
+        #      insert(q)
+        #      q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+        #         text, docId)
+        #      insert (q)
+        #      return "bothSuccess"
+        #     else:
+        #      q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+        #         text, docId)
+        #      insert (q)
+        #      return "text"
+
+        # in below save routing is the profile image save in doctor view section ajax code
+
+
 @admin.route('/save', methods=['GET', 'POST'])
 def save():
     data = {}
@@ -302,10 +343,12 @@ def save():
         filename = 'static/images/dB_Images/dbImg' + picfile.filename
         picfile.save(filename)
 
-        q = "UPDATE `doctors` SET `profile_pic` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (filename, docId)
+        q = "UPDATE `doctors` SET `profile_pic` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+            filename, docId)
         insert(q)
 
-    q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (text, docId)
+    q = "UPDATE `doctors` SET `specialization` = '%s' WHERE `doctors`.`doctor_id` = %s;" % (
+        text, docId)
     insert(q)
 
     if 'file' in request.files:
@@ -313,8 +356,5 @@ def save():
     else:
         return "text"
 
-    
     # text=request.files['text']
     # docId=request.files['docId']
-        
-        
