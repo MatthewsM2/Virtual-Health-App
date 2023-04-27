@@ -1,65 +1,58 @@
 {% include 'adminheader.html' %}
-<br><br><br><br><br>
 <style>
-.grid-container{
-	display: grid;
-	grid-template-columns: auto auto auto;
-	background-color: white;
-	padding: 10px;
-	grid-row-gap: 5px;
-	grid-column-gap: 10px;
-}	
-.grid-item {
-	background-color: white;
-	padding: 10px;
-	border: 1px solid black;
-	border-radius: 15px;
-	text-align: center;
+	#myInput {
+		background-image: url('/css/searchicon.png');
+		background-position: 10px 10px;
+		background-repeat: no-repeat;
+		width: 100%;
+		font-size: 1rem;
+		/* padding: 12px 20px 12px 40px;
+		border: 1px solid #ddd;
+		margin-bottom: 12px; */
 	}
 
-table{
-	background-color: lightyellow;
-	padding: 30px;
-	text-align: center;
-
+	#myTable {
+		border-collapse: collapse;
+		width: 100%;
+		border: 1px solid #ddd;
+		font-size: 18px;
+		text-transform: capitalize;
 	}
-td{
-	width:50%;
-	padding: 20px;
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
-tr{
-	width:50%;
-	padding: 20px;
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
-input[type=text]{
-	width:95%;
-	padding: 20px;
+	#myTable th,
+	#myTable td {
+		text-align: left;
+		padding: 12px;
+	}
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-/*	border:1px solid black;
-*/}
-	input[type=submit]{
-	width:95%;
-	padding: 20px;
+	#myTable tr {
+		border-bottom: 1px solid #ddd;
+	}
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
+	#myTable tr.header,
+	#myTable tr:hover {
+		background-color: #f1f1f1;
+	}
 
+	.table-div {
+		display: flex;
+		flex-direction: column;
+		gap: 5vh;
+		width: 100%;
+		margin: 7vh auto;
+		background-color: #ffffff;
+		padding: 3vh;
+		border-radius: 2vh;
+		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	}
 </style>
-    <body style="background-image: url(/static/images/gallery-02.jpg);">
-    	<h1 align="center"> <font size="30">Patients Details</font></h1>
-	<div class="grid-container">
+
+<body>
+	<div class="table-div">
+		<!-- <h1 align="center">
+		<font size="30">Patients Details</font>
+	</h1> -->
+		<!-- <div class="grid-container">
 		
 			{% for row in data['pa'] %}
 					<div class="grid-item">
@@ -72,7 +65,69 @@ input[type=text]{
 						<a href="?action=delete&id={{row['patient_id']}}&id1={{row['login_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>
 					</div>
 			{% endfor %} 
+	</div> -->
+
+		<!-- <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"> -->
+		<div class="form-outline">
+			<input type="text" id="myInput" onkeyup="myFunction()" class="form-control form-control-lg" />
+			<label class="form-label" for="formControlLg">Search</label>
+		</div>
+		<table id="myTable">
+			<tr class="header">
+				<!-- style="width:60%;" -->
+				<th>Name</th>
+				<th>Room</th>
+				<th>Age</th>
+				<th>Contact</th>
+				<th>View</th>
+				<th>Delete</th>
+			</tr>
+			{% for row in data['pa'] %}
+			<tr>
+				<td>{{row['NAME']}}</td>
+				<td>{{row['room_name']}}</td>
+				<td>{{row['age']}}</td>
+				<td>{{row['phone']}}</td>
+				<td>view</td>
+				<td><a href="?action=delete&id={{row['patient_id']}}&id1={{row['login_id']}}"
+						class="btn btn-sm btn-danger"
+						style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a></td>
+			</tr>
+			{% endfor %}
+			<!-- <tr>
+    <td>Berglunds snabbkop</td>
+    <td>Sweden</td>
+  </tr>
+   -->
+		</table>
 	</div>
 </body>
-
 {% include 'admin_footer.html' %}
+<script>
+	function myFunction() {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td");
+        var found = false;
+        for (j = 0; j < 4; j++) {
+            if (td[j]) { // check if td[j] is defined
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (found) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+
+</script>

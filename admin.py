@@ -282,18 +282,6 @@ def admin_assign_doc_check_date():
         docId, date)
     res = select(q)
     return (res)
-
-
-# @admin.route('/assignsave_doc', methods=['get', 'post'])
-# def assignsave_doc():
-#     print(request.form)
-#     docId = request.form['doctor_id']
-#     date = request.form['date']
-#     sel = request.form['select']
-#     q = "insert into assign_doc (doctor_id, date, time_slot) values ('%s','%s','%s')" % (
-#     docId, date, sel)
-#     insert(q)
-#     return (1)
 @admin.route('/assignsave_doc', methods=['GET', 'POST'])
 def assignsave_doc():
     try:

@@ -1,76 +1,66 @@
 {% include 'adminheader.html' %}
-<br><br><br><br><br>
 <style>
-.grid-container{
-	display: grid;
-	grid-template-columns: auto auto auto;
-	background-color: white;
-	padding: 10px;
-	grid-row-gap: 5px;
-	grid-column-gap: 10px;
-}	
-.grid-item {
-	background-color: white;
-	padding: 10px;
-	border: 1px solid black;
-	border-radius: 15px;
-	text-align: center;
+	.body-conatiner {
+		display: flex;
+		flex-direction: column;
+		width: 90%;
+		margin: auto;
+		margin-top: 7vh;
+		min-height: 100vh;
 	}
 
-table{
-	background-color: lightyellow;
-	padding: 30px;
-	text-align: center;
-
+	.card-container {
+		display: flex;
+		gap: 2rem;
+		justify-content: space-between;
+		flex-wrap: wrap;
 	}
-td{
-	width:50%;
-	padding: 20px;
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
-tr{
-	width:50%;
-	padding: 20px;
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
-input[type=text]{
-	width:95%;
-	padding: 20px;
+	.card {
+		width: 57vh;
+		min-height: 30vh;
+	}
 
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-/*	border:1px solid black;
-*/}
-	input[type=submit]{
-	width:95%;
-	padding: 20px;
-
-	font-family: Calibri;
-	font-size: 20px;
-	resize:vertical;
-}
-
+	.card p {
+		text-transform: capitalize;
+	}
 </style>
-    <body style="background-image: url(/static/images/gallery-02.jpg);">
-    	<h1 align="center"> <font size="30">Pharmacy Details</font></h1>
-	<div class="grid-container">
-		
+
+<body>
+	<div class="body-conatiner">
+		<h1>
+			Pharmacy Details
+		</h1>
+		<div class="card-container">
 			{% for row in data['phar'] %}
-					<div class="grid-item">
-						<h3><b>Pharmacy Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['phar_name']}}</b></h3><br>
-							
-						<h3><b>Contact Number:&nbsp;&nbsp;&nbsp;&nbsp;{{row['phone']}}</b></h3><br><h3><b>Email-ID:&nbsp;&nbsp;&nbsp;&nbsp;{{row['email']}}</b></h3><br>
-						<h3><b>Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['address']}}</h3></b><br>	
-						<a href="?action=delete&id={{row['pharmacy_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>&nbsp;&nbsp;
-						<a href="/admin/add_medicine?id={{row['pharmacy_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Add Medicine</a>
-					</div>
-			{% endfor %} 
+			<!-- <div class="grid-item">
+				<h3><b>Pharmacy
+						Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['phar_name']}}</b>
+				</h3><br>
+
+				<h3><b>Contact Number:&nbsp;&nbsp;&nbsp;&nbsp;{{row['phone']}}</b></h3><br>
+				<h3><b>Email-ID:&nbsp;&nbsp;&nbsp;&nbsp;{{row['email']}}</b></h3><br>
+				<h3><b>Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{row['address']}}</h3>
+				</b><br>
+				<a href="?action=delete&id={{row['pharmacy_id']}}" class="btn btn-sm btn-danger"
+					style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>&nbsp;&nbsp;
+				<a href="/admin/add_medicine?id={{row['pharmacy_id']}}" class="btn btn-sm btn-danger"
+					style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Add Medicine</a>
+			</div> -->
+			<div class="card">
+				<div class="card-body">
+					<h2 class="card-title">{{row['phar_name']}}</h2>
+					<h3>+91 {{row['phone']}}</h3>
+					<h3 class="card-text">{{row['email']}}</h3>
+					<p class="card-text">{{row['address']}}</p>
+					<a href="?action=delete&id={{row['pharmacy_id']}}" class="btn btn-sm btn-danger"
+						style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>&nbsp;&nbsp;
+					<a href="/admin/add_medicine?id={{row['pharmacy_id']}}" class="btn btn-primary"
+						style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Add Medicine</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
 	</div>
 </body>
 
