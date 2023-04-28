@@ -1,5 +1,6 @@
 from flask import *
 from database import *
+from  datetime import *
 user=Blueprint('user',__name__)
 
 @user.route('/userhome',methods=['get','post'],)
@@ -27,13 +28,25 @@ def get_user():
 
 @user.route('/send_feedbacks',methods=['get','post'])
 def send_feedbacks():
+    data={}
     ids=session['login_id']
+    # q="SELECT * FROM `feed_mess` WHERE 'toid' = '1' AND 'fromid' = '%s' or SELECT * FROM `feed_mess` WHERE 'toid' = '%s' AND 'fromid' = '1'"%(ids,ids)
+    q="SELECT * FROM feed_mess WHERE (toid = '1' AND fromid = %s) OR (toid = %s AND fromid = '1') ORDER BY mess_id ASC"%(ids,ids)
+    res=select(q)
+    data['fed_mes']=res
     if 'submit' in request.form:
         feed=request.form['feed']
-        q="insert into feedback values(null,(select patient_id from patients where login_id='%s'),'%s',Curdate(),'pending')"%(ids,feed)
+        timenow = datetime.now()
+        current_date = timenow.strftime("%Y-%m-%d")
+        current_time = timenow.strftime("%H:%M:%S")
+        q="INSERT INTO `feed_mess` (`mess_id`, `toid`, `fromid`, `date`, `time`, `message`, `flag`) VALUES (NULL, '1', '%s', '%s', '%s', '%s', NULL)"%(ids,current_date,current_time,feed)
+        # # q="insert into feedback values(null,(select patient_id from patients where login_id='%s'),'%s',Curdate(),'pending')"%(ids,feed)
         insert(q)
-        flash("Send Feedback")
-    return render_template('usersend_feedback.html')
+        flash("Feedback added")
+        return redirect('send_feedbacks')
+        # flash("Send Feedback")
+    return render_template('usersend_feedback.html',data=data)
+
 
 
 @user.route('/view_reply',methods=['get','post'])

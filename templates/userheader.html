@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/mdb.min.css">
     <!-- Pogo Slider CSS -->
     <link rel="stylesheet" href="/static/css/pogo-slider.min.css">
     <!-- Site CSS -->
@@ -28,11 +28,12 @@
     <link rel="stylesheet" href="/static/css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/custom.css">
-
-    <!--[if lt IE 9]>
+<!-- toast css  -->
+<link rel="stylesheet" href="/static/css/toast.css">
+    <!-- [if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <![endif] -->
 
 </head>
 
@@ -70,9 +71,9 @@
                 <a class="navbar-brand" href="/"><img src="/static/images/logo.png" alt="image"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-wd"
                     aria-controls="navbar-wd" aria-expanded="false" aria-label="Toggle navigation">
+                    <!-- <span></span>
                     <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span> -->
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbar-wd">
                     <ul class="navbar-nav">
@@ -104,13 +105,7 @@
                     </li>
                     </ul>
                     </li>
-                    <li><a class="nav-link" href="/"  onClick="return confirmLogout()">SIGN OUT</a></li>
-                    <!-- <li><a class="nav-link" href="#services">Services</a></li>
-						<li><a class="nav-link" href="#appointment">Appointment</a></li>
-                        <li><a class="nav-link" href="#gallery">Gallery</a></li>
-						<li><a class="nav-link" href="#team">Doctor</a></li>
-                        <li><a class="nav-link" href="#blog">Blog</a></li>
-						<li><a class="nav-link" href="#contact">Contact</a></li> -->
+                    <li><a class="nav-link" href="/" onClick="return confirmLogout()">SIGN OUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -132,25 +127,25 @@
 
 
     <script language="JavaScript" type="text/javascript">
-        function confirmLogout(){
-        var agree = confirm("Are you sure want to Logout?");
-        if(agree){
-            return true;
-        }else{
-            return false;
-        }
+        function confirmLogout() {
+            var agree = confirm("Are you sure want to Logout?");
+            if (agree) {
+                return true;
+            } else {
+                return false;
+            }
         }
         window.history.forward();
-    
-    function noBack() {
-        window.history.forward();
-    }
-    
-    // Disable back button on all browsers
-    window.onload = function() {
-        setTimeout(noBack(), 0);
-        window.onpageshow = function(evt) { if (evt.persisted) noBack(); };
-        window.onunload = function() { void (0); };
-    };
-    
+
+        function noBack() {
+            window.history.forward();
+        }
+
+        // Disable back button on all browsers
+        window.onload = function () {
+            setTimeout(noBack(), 0);
+            window.onpageshow = function (evt) { if (evt.persisted) noBack(); };
+            window.onunload = function () { void (0); };
+        };
+
     </script>
