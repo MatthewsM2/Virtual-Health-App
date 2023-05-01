@@ -1,6 +1,7 @@
 import json
 from flask import *
 from database import *
+from  datetime import *
 admin = Blueprint('admin', __name__)
 
 
@@ -157,31 +158,36 @@ def view_pharmacy():
 @admin.route('/view_feedbacks', methods=['get', 'post'])
 def view_feedbacks():
     data = {}
-    q = "select *,concat(first_name,' ',last_name)as NAME from feedback inner join patients using(patient_id)"
+    q="SELECT fm.*, CONCAT(IFNULL(p.first_name, d.first_name), ' ', IFNULL(p.last_name, d.last_name)) AS name, l.usertype FROM feed_mess fm LEFT JOIN patients p ON fm.fromid = p.login_id LEFT JOIN doctors d ON fm.fromid = d.login_id LEFT JOIN login l ON fm.fromid = l.login_id WHERE fm.toid = 1 ORDER BY fm.mess_id DESC"
     res = select(q)
     data['feed'] = res
-    j = 0
-    for i in range(1, len(res)+1):
-        if 'submit' + str(i) in request.form:
-            reply = request.form['reply'+str(i)]
-            q = "UPDATE feedback SET reply='%s' WHERE feedback_id='%s'" % (
-                reply, res[j]['feedback_id'])
-            update(q)
-            flash("send message")
-            return redirect(url_for('admin.view_feedbacks'))
-        j = j+1
-    if 'action' in request.args:
-        action = request.args['action']
-        id = request.args['id']
-    else:
-        action = None
-    if action == "delete":
-        q = "delete from feedback where feedback_id='%s'" % (id)
-        delete(q)
-        flash("Feedback Deleted")
-        return redirect(url_for('admin.view_feedbacks'))
     return render_template('adview_feedbacks.html', data=data)
 
+@admin.route('/view_message',methods=['get','post'])
+def view_message():
+    data={}
+    # ids=session['login_id']
+    ids=request.args.get('from_id')
+    name=request.args.get('n')
+    user=request.args.get('u')
+    data['name']=name
+    data['user']=user
+    # q="SELECT * FROM `feed_mess` WHERE 'toid' = '1' AND 'fromid' = '%s' or SELECT * FROM `feed_mess` WHERE 'toid' = '%s' AND 'fromid' = '1'"%(ids,ids)
+    q="SELECT * FROM feed_mess WHERE (toid = '%s' AND fromid = 1) OR (toid = 1 AND fromid = '%s') ORDER BY mess_id ASC"%(ids,ids)
+    res=select(q)
+    data['fed_mes']=res
+    if 'submit' in request.form:
+        feed=request.form['feed']
+        timenow = datetime.now()
+        current_date = timenow.strftime("%Y-%m-%d")
+        current_time = timenow.strftime("%H:%M:%S")
+        q="INSERT INTO `feed_mess` (`mess_id`, `toid`, `fromid`, `date`, `time`, `message`, `flag`) VALUES (NULL, '%s', '1', '%s', '%s', '%s', NULL)"%(ids,current_date,current_time,feed)
+        # # q="insert into feedback values(null,(select patient_id from patients where login_id='%s'),'%s',Curdate(),'pending')"%(ids,feed)
+        insert(q)
+        flash("Feedback added")
+        
+        return redirect('view_feedbacks')
+    return render_template('adfeedbackView.html', data=data)
 
 @admin.route('/add_medicine', methods=['get', 'post'])
 def add_medicine():

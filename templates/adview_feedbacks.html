@@ -1,120 +1,121 @@
 {% include 'adminheader.html'%}
-<style type="text/css">
-	form {
-		margin: 2vh auto;
-		border: 2px rgba(0, 0, 0, 0.156) solid;
-		width: 80%;
-		border-radius: 1vh;
+<style>
+	.main-feed {
+		display: flex;
+		flex-direction: column;
+		min-height: 70vh;
+		width: 100vh;
+		border: 2px solid rgba(80, 80, 80, 0.757);
+		margin: 7vh auto;
+		border-radius: 2rem;
+		padding: 1rem;
+	}
+
+	.mes-div {
+		width: 100%;
+		height: 20vh;
+		background-color: antiquewhite;
+		margin-bottom: 1rem;
+		background-color: #ffffff;
+		border-radius: 2vh;
+		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+		cursor: pointer;
+		padding: 3vh;
+	}
+
+	.mes-div:hover {
+		box-shadow: rgba(149, 157, 165, 0.435) 0px 8px 24px;
+	}
+
+	.use-type {
+		display: flex;
+		align-items: center;
+		/* padding: 10px; */
+		height: fit-content;
+	}
+
+	.use-type p {
+		margin: 0;
+		margin-left: 7px;
 	}
 
 	.name-div {
 		display: flex;
-		background-color: #30698d;
 		align-items: center;
-		min-height: 4rem;
-		padding: 1rem;
-
+		justify-content: space-between;
 	}
 
 	.name-div h1 {
 		margin: 0;
-		padding: 0;
-		color: aliceblue;
+		padding: 0%;
 	}
 
-	.message-box {
-		padding: 1rem;
-		height: 397px;
-		overflow: auto;
-	}
-
-	.sent-box {
+	.not-date,
+	.not-time,
+	.mes-con {
 		display: flex;
+		align-items: center;
 	}
 
-	.sent-box textarea {
-		width: 100%;
-		height: 54px;
-		outline-color: #3b71ca;
-	}
-
-	.sender-box {
-		background-color: #63c190;
-		width: fit-content;
-		max-width: 47%;
-		min-height: 3rem;
-		align-self: flex-start;
-		border-radius: 3vh;
-		padding: 0.5rem;
-		margin-bottom: 2px;
-	}
-
-	.receiver-box {
-		background-color: #30698d;
-		width: fit-content;
-		max-width: 47%;
-		min-height: 2rem;
-		align-self: flex-end;
-		margin-left: auto;
-		margin-right: 0;
-		border-radius: 3vh;
-		padding: 0.5rem;
-		margin-bottom: 2px;
-		text-align: end;
-	}
-
-	.sender-box p,
-	.receiver-box p {
-		color: white;
-		font-size: 1rem;
+	.not-date p,
+	.not-time p,
+	.mes-con p {
 		margin: 0;
-		margin-bottom: 3px;
+		padding: 0%;
+		padding-left: 2vh;
 	}
 
-	.date-time {
-		margin: 0;
-		padding: 0;
-		font-size: 12px !important;
+	.not {
+		display: flex;
+		gap: 3vh;
+	}
+
+	.mes-icon-con {
+		display: flex;
+		justify-content: space-between;
+	}
+	.acc-type{
+		text-transform: capitalize;
 	}
 </style>
 
 <body style="background: pink">
-	<form method="post">
-		<div class="name-div">
-			<h1>Admin</h1>
-		</div>
 
-		<div class="message-box">
-			<!-- {% set prev_date = None %} -->
-			{% for row in data['fed_mes'] %}
-			<!-- {% if row['date'] != prev_date %}
-                    <p style="text-align: center;">{{ row['date'] }}</p>
-                    {% set prev_date = row['date'] %}
-                {% endif %} -->
-			{% if row['toid'] == 1 %}
-			<div class="sender-box">
-				<p>{{row['message']}}</p>
-				<p class="date-time">{{row['date']}} {{row['time']}}</p>
+	<div class="main-feed">
+		<h1>Feedbacks</h1>
+		{% for row in data['feed'] %}
+		<a href="view_message?from_id={{row['fromid']}}&n={{row['name']}}&u={{row['usertype']}}">
+			<div class="mes-div">
+				<div class="name-div">
+					<h1>{{row['name']}}</h1>
+					<i class="far fa-bell"></i>
+				</div>
+				<div class="mes-icon-con">
+					<div class="use-type">
+						<i class="far fa-circle-user"></i>
+						<p class="acc-type">{{row['usertype']}}</p>
+					</div>
+					<div class="mes-con">
+						<i class="far fa-comment-dots"></i>
+						<p>1 new message</p>
+					</div>
+				</div>
+				<!-- <h2>Notification</h2> -->
+				<div class="not">
+					<div class="not-date">
+						<i class="far fa-calendar"></i>
+						<p>{{row['date']}}</p>
+					</div>
+					<div class="not-time">
+						<i class="far fa-clock"></i>
+						<p>{{row['time']}}</p>
+					</div>
+				</div>
 			</div>
-			{% else %}
-			<div class="receiver-box">
-				<p>{{row['message']}}</p>
-				<p class="date-time">{{row['date']}} {{row['time']}}</p>
-			</div>
-			{% endif %}
-			{% endfor %}
-		</div>
 
+		</a>
+		{% endfor %}
 
+	</div>
 
-		<div class="sent-box">
-			<textarea name="feed" id="" cols="30" rows="10" placeholder="Type Message..."></textarea>
-			<button name="submit" class="btn btn-primary" value="submit"><svg xmlns="http://www.w3.org/2000/svg"
-					width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-					<path
-						d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-				</svg>Sent</button>
-		</div>
-
-	</form>
 	{% include 'admin_footer.html'%}

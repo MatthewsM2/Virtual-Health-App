@@ -80,11 +80,13 @@ def view_myprofile():
 @user.route('/search_doctors',methods=['get','post'])
 def search_doctors():
     data={}
+    ids=session['login_id']
     if 'submit' in request.form:        
-        name=request.form['name']
-        q="select *,concat(first_name,' ',last_name)as NAME from doctors WHERE  doctors.first_name LIKE '%s'"%(name)
-        res=select(q)
-        data['viewsearch']=res
+        docid=request.form['doc']
+        daytime=request.form['daytime']
+        destxt=request.form['txtdes']
+        q = "INSERT INTO `booking` (`booking_id`, `patient_id`, `doctor_id`, `date`, `status`, `des`, `a_date`) VALUES (NULL, '%s', '%s', '%s', NULL, '%s', NULL)"%(ids,docid,daytime,destxt)
+        insert(q)
     q="select *,concat(first_name,' ',last_name)as NAME from doctors"
     res=select(q)
     data['doc']=res

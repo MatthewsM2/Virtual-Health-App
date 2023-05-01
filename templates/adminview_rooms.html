@@ -1,69 +1,10 @@
 {% include 'adminheader.html'%}
-<style type="text/css">
-    /*.container{
-        text-align: center;
-        background-color: rgb(99, 109, 109);
-        padding: 100px;
-    }*/
-    table{
-        width: 50%;
-        padding: 12px;
-        border-radius: 4px;
-        resize: vertical;
-        color: black;
-        font-style: bold;
-        font-family:Calibri;
-        font-size: 20px;
-    }
-    tr{
-        width: 90%;
-        padding: 12px;
-        border-radius: 4px;
-        resize: vertical;
-        color: black;
-        font-style: bold;
-        font-family:Calibri;
-        font-size: 20px;
-    }
-    th{
-        width: 20%;
-        padding: 12px;
-        border-radius: 4px;
-        resize: vertical;
-        color: black;
-        font-style: bold;
-        font-family:Calibri;
-        font-size: 20px;
-
-    }
-    td{
-        width: 90%;
-        padding: 12px;
-        border-radius: 4px;
-        resize: vertical;
-        color: black;
-        font-style: bold;
-        font-family:Calibri;
-        font-size: 20px;
-
-    }
-    input[type=submit]
-    {
-        width: 20%;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        resize: vertical;
-    }
-
-   
 </style>
 <body style="background: pink">
-	<br><br><br>
+    <br><br>
 	<h1 align="center"><font color="black"><u>Room Status</u></font></h1>
 	<form method="post">
         <form method="post">
-        	<br><br><br>
             {% if data['updateprt'] %}
        <table  align="Center">
            	<tr class="tr">
@@ -100,5 +41,4 @@
 			
 {% endif %}
 	</form>
-<br><br><br><br>
 {% include 'admin_footer.html'%}

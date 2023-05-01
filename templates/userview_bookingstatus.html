@@ -1,6 +1,80 @@
 {% include 'userheader.html'%}
-<body style="background: pink">
-	<br><br><br>
+<style>
+	.grid-container {
+		display: grid;
+		grid-template-columns: auto auto auto;
+		background-color: white;
+		padding: 10px;
+		grid-row-gap: 5px;
+		grid-column-gap: 10px;
+	}
+
+	.su-container {
+		margin: 0 8vh 4vh 8vh;
+		border: 2px rgba(0, 0, 0, 0.156) solid;
+		width: 80vh;
+		padding: 20px;
+		border-radius: 1vh;
+	}
+
+	.grid-item {
+		background-color: white;
+		padding: 10px;
+		border: 1px solid black;
+		border-radius: 15px;
+	}
+
+	h1 {
+		text-transform: capitalize;
+	}
+
+	.imageContainer {
+		height: 240px;
+		width: 157px;
+		background-color: aqua;
+		border-radius: 5px;
+	}
+
+	.imageContainer img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		cursor: pointer;
+	}
+
+	.sub1 {
+		height: 240px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.subContainer {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	textarea {
+		margin-top: 2vh;
+		width: 100%;
+		outline: none;
+	}
+
+	.parent-Cont {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	input[type="file"] {
+		display: block;
+		opacity: 0%;
+		position: absolute;
+		height: 1px;
+	}
+</style>
+<body>
+	<!-- <br><br><br>
 	<h1 align="center"><font color="black"><u>Booking Status</u></font></h1>
 	<form method="post">
 
@@ -24,5 +98,56 @@
 		{% endfor %}
 	</table>
 	</form>
-<br><br><br><br>
+<br><br><br><br> -->
+<div class="parent-Cont">
+	<div class="su-container">
+		<div class="subContainer">
+			<div class="sub1">
+				<div>
+					<h1>Dr.name</h1>
+					<h5>qualification</h5>
+				</div>
+				<h3>+91 7657687323</h3>
+				<h3>mail@mail.com</h3>
+			</div>
+			<div class="sub2">
+				<label for="file-ip-{{ loop.index }}">
+					<div class="imageContainer">
+		
+						<img src="https://img.freepik.com/free-vector/doctor-background-design_1270-62.jpg?size=626&ext=jpg"
+							alt="" id="file-ip-1-preview">
+					
+						<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BrvftUuObhVHhlrmMAAMFwHaHa%26pid%3DApi&f=1&ipt=fa3ccaf1994c59a6369dd391c55459e78fc2b1d755d8c44e50e6be8dc2532921&ipo=images"
+							alt="" id="file-ip-1-preview">
+						
+						<img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=626&ext=jpg"
+							alt="" id="file-ip-1-preview">
+						
+						<img src="/{{row['profile_pic']}}" alt="" id="file-ip-1-preview">
+					
+				</label>
+			</div>
+			<input name="file" type="file" id="file-ip-{{ loop.index }}" accept="image/*" onchange="showPreview(event);">
+		</div>
+	</div>
+	<div class="textarea">
+		<textarea name="" id="" placeholder="Write the Specialization">sdadf</textarea>
+		<input type="hidden" value="{{row['doctor_id']}}">
+	</div>
+	<div class="buttons-div">
+		
+		<a href="/admin/viewdoctors?id1={{row['login_id']}}" style="text-decoration: none"
+			class="btn btn-primary">Accept</a>
+		<a href="/admin/viewdoctors?id2={{row['login_id']}}" style="text-decoration: none"
+			class="btn btn-primary">Reject</a>`
+		
+		<a href="/admin/viewdoctors?id3={{row['login_id']}}" style="text-decoration: none"
+			class="btn btn-primary">Unblock</a>`
+		
+		<button class="btn btn-success" onclick="save(event)">Save</button>
+		<a href="?action=delete&id={{row['doctor_id']}}&id1={{row['login_id']}}" class="btn btn-sm btn-danger"
+			style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>
+	</div>
+</div>
+</div>
 {% include 'footer.html'%}
