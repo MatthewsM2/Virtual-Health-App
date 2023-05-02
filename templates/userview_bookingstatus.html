@@ -80,8 +80,9 @@
 </style>
 
 <body>
-	<h1>Booking Status</h1>
-	
+	<br>
+	<h1 align="center">Booking Status</h1>
+	<br>
 	<div class="parent-Cont">
 		{% for row in data['book'] %}
 		<div class="card su-container">
@@ -137,10 +138,10 @@
 		<div class="buttons-div">
 		{%if row['status'] == None %}
 			<a href="/admin/viewdoctors?id1=" style="text-decoration: none" class="btn btn-primary">Pending</a>
-		{%elif row['status'] == 'reject'%}
+		{%elif row['status'] == 'Reject'%}
 			<a href="/admin/viewdoctors?id2=" style="text-decoration: none" class="btn btn-primary">Reject</a>
-		{% elif row['status']=='join'%}
-			<button class="btn btn-success" onclick="save(event)">Join</button>
+		{% elif row['status']=='Join'%}
+		<a href="https://8x8.vc/vpaas-magic-cookie-08e013ea4d684e2ba46cc71c972ebd32/SampleAppStrongCreamsShareTonight"target="_blank" class="btn btn-sm btn-success">Join</a>
 			{% endif %}
 			<a href="?action=delete&id=&id1=" class="btn btn-sm btn-danger">Delete</a>
 		</div>

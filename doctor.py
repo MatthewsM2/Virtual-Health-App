@@ -42,6 +42,10 @@ def doctor_patients():
     q = "SELECT booking.*, doctors.*, patients.*, CONCAT(doctors.first_name, ' ', doctors.last_name) AS doctor_name, CONCAT(patients.first_name, ' ', patients.last_name) AS patient_name FROM booking INNER JOIN doctors ON booking.doctor_id = doctors.doctor_id INNER JOIN patients ON booking.patient_id = patients.login_id WHERE booking.doctor_id = '%s' AND booking.patient_id = '%s'" % (did, pid)
     res = select(q)
     data['detailsBook'] = res
+    bid=data['detailsBook'][0]['booking_id']
+    q="SELECT * FROM `prescription_uptable` where bid = '%s'" %(bid)
+    res=select(q)
+    data['pres']=res
     return render_template('doctor_patientsView.html', data=data)
 
 
@@ -103,7 +107,22 @@ def close():
 #             return("Success")
 #         else:
 #             return("error")
-
+@doctor.route('/pres_save', methods=['POST'])
+def pres_save():
+        bid = request.form['bid']
+        txt = request.form['txt']
+        q = "SELECT * FROM `prescription_uptable` WHERE `bid` = '%s'" % bid
+        res = select(q)
+        if res is None:
+            q = "INSERT INTO `prescription_uptable` (`pre_id`, `bid`, `txt`) VALUES (NULL, '%s', '%s')" % (
+            bid, txt)
+            insert(q)
+            return "Success"
+        else:
+            q = "UPDATE `prescription_uptable` SET `txt` = '%s' WHERE `bid` = '%s'" % (
+            txt, bid)
+            update(q)
+        return "Success"
 
 @doctor.route('/appo_update', methods=['POST'])
 def appo_update():
@@ -140,21 +159,3 @@ def appo_update():
     #         update(q)
     #         return("Success")
     #     return
-
-    @doctor.route('/pres_save', methods=['POST'])
-    def pres_save():
-        bid = request.form['bid']
-        txt = request.form['txt']
-        flash(txt)
-        q = "SELECT * FROM `prescription_uptable` WHERE `bid` = '%s'" % bid
-        res = select(q)
-        if res is NULL:
-            q = "INSERT INTO `prescription_uptable` (`pre_id`, `bid`, `txt`) VALUES (NULL, '%s', '%s')" % (
-            bid, txt)
-            insert(q)
-            return "Success"
-        else:
-            q = "UPDATE `prescription_uptable` SET `txt` = '%s' WHERE `bid` = '%s'" % (
-            txt, bid)
-            update(q)
-        return "Success"

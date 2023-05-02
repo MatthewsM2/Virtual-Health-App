@@ -52,7 +52,12 @@
     </form>
     {% include 'footer.html' %}
     <script>
-        $("#datepicker").datepicker({
-            minDate: 0 // set minimum date to today
-        });
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = (now.getMonth() + 1).toString().padStart(2, "0");
+    var day = now.getDate().toString().padStart(2, "0");
+    var hour = now.getHours().toString().padStart(2, "0");
+    var minute = now.getMinutes().toString().padStart(2, "0");
+    var datetime = year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+    $('#datepicker').attr('min', datetime);
     </script>

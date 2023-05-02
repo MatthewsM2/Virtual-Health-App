@@ -1,29 +1,57 @@
 {% include 'userheader.html'%}
-<body style="background: pink">
-	<br><br><br>
-	<h1 align="center"><font color="black"><u>Patients Prescription</u></font></h1>
-	<form method="post">
+<style>
+	.body-conatiner {
+		display: flex;
+		flex-direction: column;
+		width: 90%;
+		margin: auto;
+		margin-top: 7vh;
+		min-height: 100vh;
+	}
 
-	<table  align="center" class="table" style="width:700px;">
-			<tr>
-				<th><font color="black">Date</font></th>
-				<th><font color="black">Patient Name</font></th>
-				<th><font color="black">Doctor Name</font></th>
-				<th><font color="black">Medicine Name</font></th>
-				<th><font color="black">Quantity</font></th>
+	.card-container {
+		display: flex;
+		gap: 2rem;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
 
-			</tr>
-			<tbody>
-			{% for row in data['pre']%}
-			<td><font color="black"><b>{{row['date']}}</b></font></td>
-			<td><font color="black"><b>{{row['PNAME']}}</b></font></td>
-			<td><font color="black"><b>{{row['DNAME']}}</b></font></td>
-			<td><font color="black"><b>{{row['medicine_name']}}</b></font></td>
-			<td><font color="black"><b>{{row['quantity']}}</b></font></td>
-			<td><a href="/user/search_medicine?id={{row['pres_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Search Medicine</a></td>
-		</tbody>
+	.card {
+		width: 57vh;
+		min-height: 30vh;
+	}
+
+	.card p {
+		text-transform: capitalize;
+	}
+	h2{
+text-transform: capitalize;
+	}
+</style>
+<div class="body-conatiner">
+	<h1>
+		Pharmacy Details
+	</h1>
+	<div class="card-container">
+		{% for row in data['pre'] %}
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title">Dr {{ row['doctor_name'] }}</h2>
+				<div class="form-outline">
+					<textarea class="form-control" id="textAreaExample" rows="4" disabled>{{row['txt']}}</textarea>
+				</div>
+				<h3 class="card-text"></h3>
+				<!-- <p class="card-text"></p>
+				<a href="?action=delete&id=" class="btn btn-sm btn-danger"
+					style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>&nbsp;&nbsp;
+				<a href="/admin/add_medicine?id=" class="btn btn-primary"
+					style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Add Medicine</a> -->
+			</div>
+		</div>
 		{% endfor %}
-	</table>
-	</form>
-<br><br><br><br>
+
+	</div>
+</div>
+</body>
+
 {% include 'footer.html'%}

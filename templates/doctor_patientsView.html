@@ -134,7 +134,8 @@
         </div>
         <div class="form-body">
             <h1>Prescriptions</h1>
-            <textarea class="form-control" id="textarea" rows="2" placeholder="Write here.."></textarea>
+            <textarea class="form-control" id="textarea" rows="2"
+                placeholder="Write here..">{{ data['pres'][0].txt }}</textarea>
             <div class="mb-3">
                 <button onclick="PrescriptionSent()" name="submit" type="submit"
                     class="btn btn-primary btn-block mb-3">Sent</button>
@@ -147,31 +148,41 @@
 <!-- <script src='https://meet.jit.si/external_api.js'></script> -->
 <script src="/static/js/toast.js"></script>
 <script>
-function PrescriptionSent() {
-    var bid = $("#bidH").val();
-    var txt = $("#textarea").val();
-    var fd = new FormData();
-    fd.append('bid', bid);
-    fd.append('txt',txt);
-    $.ajax({
-                type: "POST",
-                url: "pres_save",
-                data: fd,
-                processData: false,
-                contentType: false,
-                success: function (tex) {
-                    if (tex == "Success") {
-                        Success();
-                    }
-                    else if (tex == "text") {
-                        Success();
-                    }
-                    else if (tex == "error") {
-                        ErrorCase();
-                    }
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = (now.getMonth() + 1).toString().padStart(2, "0");
+    var day = now.getDate().toString().padStart(2, "0");
+    var hour = now.getHours().toString().padStart(2, "0");
+    var minute = now.getMinutes().toString().padStart(2, "0");
+    var datetime = year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+    $('#dateSel').attr('min', datetime);
+
+
+    function PrescriptionSent() {
+        var bid = $("#bidH").val();
+        var txt = $("#textarea").val();
+        var fd = new FormData();
+        fd.append('bid', bid);
+        fd.append('txt', txt);
+        $.ajax({
+            type: "POST",
+            url: "pres_save",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (tex) {
+                if (tex == "Success") {
+                    Success();
                 }
-            });
-}
+                else if (tex == "text") {
+                    Success();
+                }
+                else if (tex == "error") {
+                    ErrorCase();
+                }
+            }
+        });
+    }
 
     function AppoUpdate() {
         var bid = $("#bidH").val();

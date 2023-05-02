@@ -140,7 +140,7 @@ def booking_status():
 def view_prescription():
     data={}
     ids=session['login_id']
-    q="SELECT *,CONCAT(patients.`first_name`,' ',patients.`last_name`)AS PNAME,CONCAT(doctors.`first_name`,' ',doctors.`last_name`)AS DNAME FROM `prescription` INNER JOIN `share_progress` USING(progress_id) INNER JOIN patients USING(patient_id)INNER JOIN medicines USING(medicine_id)INNER JOIN doctors ON doctors.doctor_id = doctors.doctor_id where patients.login_id='%s'"%(ids) 
+    q="SELECT booking.*, CONCAT(doctors.first_name, ' ', doctors.last_name) AS doctor_name, CONCAT(patients.first_name, ' ', patients.last_name) AS patient_name, prescription_uptable.* FROM booking INNER JOIN doctors ON booking.doctor_id = doctors.doctor_id INNER JOIN patients ON booking.patient_id = patients.login_id INNER JOIN prescription_uptable ON prescription_uptable.bid = booking.booking_id WHERE booking.patient_id ='%s'"%(ids) 
     res=select(q)
     data['pre']=res
     return render_template('userview_prescription.html',data=data)
