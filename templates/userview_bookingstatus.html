@@ -72,82 +72,79 @@
 		position: absolute;
 		height: 1px;
 	}
-</style>
-<body>
-	<!-- <br><br><br>
-	<h1 align="center"><font color="black"><u>Booking Status</u></font></h1>
-	<form method="post">
 
-	<table  align="center" class="table" style="width:700px;">
-			<tr>
-				<th><font color="black">Booking Date</font></th>
-				<th><font color="black">Patient Name</font></th>
-				<th><font color="black">Doctor Name</font></th>
-				<th><font color="black">Status</font></th>
-			</tr>
-			<tbody>
-			{% for row in data['book']%}
-			<td><font color="black"><b>{{row['date']}}</b></font></td>
-			<td><font color="black"><b>{{row['NAME']}}</b></font></td>
-			<td><font color="black"><b>{{row['DNAME']}}</b></font></td>
-			<td><font color="black"><b>{{row['status']}}</b></font></td>
-			<td>
-				<a href="?action=delete&id={{row['booking_id']}}" class="btn btn-primary">Cancel</a>
-			</td>
-		</tbody>
-		{% endfor %}
-	</table>
-	</form>
-<br><br><br><br> -->
-<div class="parent-Cont">
-	<div class="su-container">
-		<div class="subContainer">
-			<div class="sub1">
-				<div>
-					<h1>Dr.name</h1>
-					<h5>qualification</h5>
+	.buttons-div {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>
+
+<body>
+	<h1>Booking Status</h1>
+	
+	<div class="parent-Cont">
+		{% for row in data['book'] %}
+		<div class="card su-container">
+			<div class="card-body subContainer">
+				<div class="sub1">
+					<div>
+						<h1>Dr.{{row['doctor_name']}}</h1>
+						<h5>{{row['Qualification']}}</h5>
+					</div>
+					<h3>+91 {{row['phone']}}</h3>
+					<h3>{{row['email']}}</h3>
+					<h5>{{row['specialization']}}</h5>
+					<h3 style="color: aquamarine;">{{row['a_date']}}</h3>
 				</div>
-				<h3>+91 7657687323</h3>
-				<h3>mail@mail.com</h3>
+				<div class="sub2">
+					<label for="file-ip-">
+						<div class="imageContainer">
+							<!-- {% if row['profile_pic == "none" '] %}
+								{% if row['gender'] == 'female' %}
+								<img src="https://img.freepik.com/free-vector/doctor-background-design_1270-62.jpg?size=626&ext=jpg"
+									alt="" id="file-ip-1-preview">
+								{% elif row['gender'] == 'other'%}
+								<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BrvftUuObhVHhlrmMAAMFwHaHa%26pid%3DApi&f=1&ipt=fa3ccaf1994c59a6369dd391c55459e78fc2b1d755d8c44e50e6be8dc2532921&ipo=images"
+									alt="" id="file-ip-1-preview">
+								{% else %}
+								<img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=626&ext=jpg"
+									alt="" id="file-ip-1-preview">
+								{% endif %}
+							{% else %}
+							<img src="/{{row['profile_pic']}}"
+							alt="" id="file-ip-1-preview">
+							{% endif %} -->
+							{% if row['gender'] == 'female' and row['profile_pic'] == None %}
+							<img src="https://img.freepik.com/free-vector/doctor-background-design_1270-62.jpg?size=626&ext=jpg"
+								alt="" id="file-ip-1-preview">
+							{% elif row['gender'] == 'other' and row['profile_pic'] == None %}
+							<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BrvftUuObhVHhlrmMAAMFwHaHa%26pid%3DApi&f=1&ipt=fa3ccaf1994c59a6369dd391c55459e78fc2b1d755d8c44e50e6be8dc2532921&ipo=images"
+								alt="" id="file-ip-1-preview">
+							{% elif row['gender'] == 'male' and row['profile_pic'] == None %}
+							<img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=626&ext=jpg"
+								alt="" id="file-ip-1-preview">
+							{% elif row['profile_pic'] != NULL %}
+							<img src="/{{row['profile_pic']}}" alt="" id="file-ip-1-preview">
+							{% endif %}
+					</label>
+				</div>
 			</div>
-			<div class="sub2">
-				<label for="file-ip-{{ loop.index }}">
-					<div class="imageContainer">
-		
-						<img src="https://img.freepik.com/free-vector/doctor-background-design_1270-62.jpg?size=626&ext=jpg"
-							alt="" id="file-ip-1-preview">
-					
-						<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BrvftUuObhVHhlrmMAAMFwHaHa%26pid%3DApi&f=1&ipt=fa3ccaf1994c59a6369dd391c55459e78fc2b1d755d8c44e50e6be8dc2532921&ipo=images"
-							alt="" id="file-ip-1-preview">
-						
-						<img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=626&ext=jpg"
-							alt="" id="file-ip-1-preview">
-						
-						<img src="/{{row['profile_pic']}}" alt="" id="file-ip-1-preview">
-					
-				</label>
-			</div>
-			<input name="file" type="file" id="file-ip-{{ loop.index }}" accept="image/*" onchange="showPreview(event);">
+		</div>
+		<div class="textarea">
+			<textarea name="" id="" placeholder="Write the Specialization" readonly>join @ 5:00pmvsdchdhgyud</textarea>
+			<input type="hidden" value="">
+		</div>
+		<div class="buttons-div">
+		{%if row['status'] == None %}
+			<a href="/admin/viewdoctors?id1=" style="text-decoration: none" class="btn btn-primary">Pending</a>
+		{%elif row['status'] == 'reject'%}
+			<a href="/admin/viewdoctors?id2=" style="text-decoration: none" class="btn btn-primary">Reject</a>
+		{% elif row['status']=='join'%}
+			<button class="btn btn-success" onclick="save(event)">Join</button>
+			{% endif %}
+			<a href="?action=delete&id=&id1=" class="btn btn-sm btn-danger">Delete</a>
 		</div>
 	</div>
-	<div class="textarea">
-		<textarea name="" id="" placeholder="Write the Specialization">sdadf</textarea>
-		<input type="hidden" value="{{row['doctor_id']}}">
+	{% endfor %}
 	</div>
-	<div class="buttons-div">
-		
-		<a href="/admin/viewdoctors?id1={{row['login_id']}}" style="text-decoration: none"
-			class="btn btn-primary">Accept</a>
-		<a href="/admin/viewdoctors?id2={{row['login_id']}}" style="text-decoration: none"
-			class="btn btn-primary">Reject</a>`
-		
-		<a href="/admin/viewdoctors?id3={{row['login_id']}}" style="text-decoration: none"
-			class="btn btn-primary">Unblock</a>`
-		
-		<button class="btn btn-success" onclick="save(event)">Save</button>
-		<a href="?action=delete&id={{row['doctor_id']}}&id1={{row['login_id']}}" class="btn btn-sm btn-danger"
-			style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">Delete</a>
-	</div>
-</div>
-</div>
-{% include 'footer.html'%}
+	{% include 'footer.html'%}

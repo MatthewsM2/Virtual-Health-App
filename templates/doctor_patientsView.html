@@ -1,0 +1,225 @@
+{% include 'doctor_header.html'%}
+
+<head>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+</head>
+<style>
+    .form-body {
+        display: flex;
+        flex-direction: column;
+        gap: 5vh;
+        width: 100vh;
+        margin: 7vh auto;
+        background-color: #ffffff;
+        padding: 7vh;
+        border-radius: 2vh;
+        box-shadow: rgba(149, 157, 165, 0.061) 0px 8px 24px;
+    }
+
+    .form-control:focus:not(:disabled):not([readonly]):not(:invalid) {
+        color: #212529;
+        background-color: #fff !important;
+        border-color: #ced4da;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    .from-control input [type='text'] {
+        text-transform: capitalize !important;
+    }
+
+    .body {
+        display: flex;
+    }
+</style>
+<div class="body">
+    <div class="form-body">
+
+        <!-- 2 column grid layout with text inputs for the first and last names -->
+        <h1>Patient Details</h1>
+        <div class="row mb-4">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" disabled
+                        value="{{ data['detailsBook'][0].first_name }}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" disabled
+                        value="{{ data['detailsBook'][0].last_name }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Age</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" disabled
+                        value="{{ data['detailsBook'][0].age }}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Gender</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" disabled
+                        value="{{ data['detailsBook'][0].gender }}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Room Id</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" disabled
+                        value="{{ data['detailsBook'][0].room_id }}">
+                </div>
+            </div>
+        </div>
+
+        <!-- Text input -->
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" disabled
+                value="{{ data['detailsBook'][0].email }}">
+        </div>
+
+        <!-- Text input -->
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" disabled
+                value="{{ data['detailsBook'][0].phone }}">
+        </div>
+
+        <!-- text input -->
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Address</label>
+            <textarea class="form-control" id="form6Example7" rows="4"
+                disabled>{{ data['detailsBook'][0].address }}</textarea>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="form-body">
+
+            <h1>Appointment Details</h1>
+            <input id="bidH" type="hidden" name="" value="{{ data['detailsBook'][0].booking_id }}">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Preferred Date</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" disabled
+                    value="{{ data['detailsBook'][0].date }}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Description</label>
+                <textarea class="form-control" id="form6Example7" rows="4"
+                    disabled>{{ data['detailsBook'][0].des }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Set Status</label>
+                <select id="selectStatus" class="form-select" aria-label="Default select example">
+                    <option selected disabled>Pending</option>
+                    <option value="n">Reject</option>
+                    <option value="j">Join</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Date</label>
+                <input type="datetime-local" class="form-control" id="dateSel" value="{{data['detailsBook'][0].date}}">
+            </div>
+            <div class="mb-3">
+                <button onclick="AppoUpdate()" class="btn btn-primary btn-block mb-3">Update</button>
+            </div>
+
+        </div>
+        <div class="form-body">
+            <h1>Prescriptions</h1>
+            <textarea class="form-control" id="textarea" rows="2" placeholder="Write here.."></textarea>
+            <div class="mb-3">
+                <button onclick="PrescriptionSent()" name="submit" type="submit"
+                    class="btn btn-primary btn-block mb-3">Sent</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'doctor_footer.html'%}
+<!-- <script src='https://meet.jit.si/external_api.js'></script> -->
+<script src="/static/js/toast.js"></script>
+<script>
+function PrescriptionSent() {
+    var bid = $("#bidH").val();
+    var txt = $("#textarea").val();
+    var fd = new FormData();
+    fd.append('bid', bid);
+    fd.append('txt',txt);
+    $.ajax({
+                type: "POST",
+                url: "pres_save",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (tex) {
+                    if (tex == "Success") {
+                        Success();
+                    }
+                    else if (tex == "text") {
+                        Success();
+                    }
+                    else if (tex == "error") {
+                        ErrorCase();
+                    }
+                }
+            });
+}
+
+    function AppoUpdate() {
+        var bid = $("#bidH").val();
+        var sel = $("#selectStatus").val();
+        var date = $("#dateSel").val();
+        var url = "https://meet.jit.si/FormalScientistsGetClose";
+
+        if (sel == 'j' || sel == 'n') {
+            var fd = new FormData();
+            fd.append('b_id', bid);
+            fd.append('status', sel);
+            fd.append('a_date', date);
+            fd.append('link', url);
+
+            $.ajax({
+                type: "POST",
+                url: "appo_update",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (tex) {
+                    if (tex == "Success") {
+                        Success();
+                    }
+                    else if (tex == "text") {
+                        Success();
+                    }
+                    else if (tex == "error") {
+                        ErrorCase();
+                    }
+                }
+            });
+        }
+    }
+    function Success() {
+        toastNotif({
+            text: 'Saved Successfully',
+            color: '#5bc83f',
+            timeout: 3000,
+            icon: 'valid'
+        });
+    }
+    function ErrorCase() {
+        toastNotif({
+            text: 'Something went wrong !',
+            color: '#da4848',
+            timeout: 3000,
+            icon: 'error'
+        });
+    }	
+</script>

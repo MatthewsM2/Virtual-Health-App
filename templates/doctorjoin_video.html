@@ -1,130 +1,28 @@
-{% include 'doctor_header.html' %}
-<!--
-    Ideally these elements aren't created until it's confirmed that the 
-    client supports video/camera, but for the sake of illustrating the 
-    elements involved, they are created with markup (not JavaScript)
--->
-<style type="text/css">
-#close-btn {
-  position: absolute;
-  width: 20px;
-  height: 18px;
-  top: 0px;
-  left: 278px;
-  cursor: pointer;
-  z-index:220;
-  background-image: url('close.png');
-  background-repeat: no-repeat;
-}
-</style>
-<br><br><br><br><br><br><br><br>
-<a href = "mailto:abc@example.com?subject = Feedback&body = Message" class="btn btn-primary">
-Send Url
-</a>
-<a href="/doctor/close" onClick="return confirmLogout()" class="btn btn-primary">Close</a>
-<!-- <a href="/user/close" class="btn btn-primary">Close</a>
- -->
-<div  style="position:relative;border-style:groove;border-radius:8px;width:640px;border-color:red;border-width:5px">
-<video id="video" width="640" height="480" autoplay></video>
-   <img src="/static/images/123.png" width="600" height="70" >
-
-</div>
-
-<script>
-// Grab elements, create settings, etc.
-var video = document.getElementById('video');
-
-// Get access to the camera!
-if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-        //video.src = window.URL.createObjectURL(stream);
-        video.srcObject = stream;
-        video.play();
-    });
-}
-
-/* Legacy code below: getUserMedia 
-else if(navigator.getUserMedia) { // Standard
-    navigator.getUserMedia({ video: true }, function(stream) {
-        video.src = stream;
-        video.play();
-    }, errBack);
-} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-    navigator.webkitGetUserMedia({ video: true }, function(stream){
-        video.src = window.webkitURL.createObjectURL(stream);
-        video.play();
-    }, errBack);
-} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
-    navigator.mozGetUserMedia({ video: true }, function(stream){
-        video.srcObject = stream;
-        video.play();
-    }, errBack);
-}
-*/
-
-</script>
-
-<script>
-
-// Elements for taking the snapshot
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var video = document.getElementById('video');
-
-// Trigger photo take
-document.getElementById("snap").addEventListener("click", function() {
-    context.drawImage(video, 0, 0, 640, 480);
-});
-
-</script>
-<script>
-    document.ready=function(){
-        $("#uname").change(function(){
-            var class_id = $(this).val();
-            // alert(class_id)
-            $.get('{{url_for("user.get_user")}}?class_id='+class_id,function(data){
-                response=JSON.parse(data)
-                var len = response.length;
-                alert(len)
-                $("#sel_class_child").empty();
-                // $("#sel_class_child").append("<option value='0'>--Select--</option>");
-                // for( var i = 0; i<len; i++)
-                // {
-                //     var id = response[i]['id'];
-                //     var name = response[i]['name'];
-                //     $("#sel_class_child").append("<option value='"+id+"'>"+name+"</option>");
-                // }
-                var name = response[0]['NAME'];
-                alert(name)
-                $("#NAME").val(name);
-
-            });
-        });
+ {% include 'doctor_header.html' %} 
+    <script src='https://8x8.vc/vpaas-magic-cookie-08e013ea4d684e2ba46cc71c972ebd32/external_api.js' async></script>
+    <style>html, body, #jaas-container { height: 100%; }</style>
+  <style>
+    #jaas-container{
+        height: 100vh;
     }
-    // var myWindow;
-    // function closeWin()
-    // {
-    //     myWindow.close();
-    // }
-</script>
-<!--  -->
-<script language="JavaScript" type="text/javascript">
-    function confirmLogout(){
-    var agree = confirm("Are you sure want to close?");
-    if(agree){
-        return true;
-    }else{
-        return false;
+  </style>
+    <body>
+    <div id="jaas-container" >
+
+    </div>
+</body>
+<script type="text/javascript">
+    window.onload = () => {
+      const api = new JitsiMeetExternalAPI("8x8.vc", {
+        roomName: "vpaas-magic-cookie-08e013ea4d684e2ba46cc71c972ebd32/SampleAppStrongCreamsShareTonight",
+        parentNode: document.querySelector('#jaas-container'),
+                      // Make sure to include a JWT if you intend to record,
+                      // make outbound calls or use any other premium features!
+                      // jwt: "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtMDhlMDEzZWE0ZDY4NGUyYmE0NmNjNzFjOTcyZWJkMzIvZGY2YzJhLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE2ODMwMjY3NDUsImV4cCI6MTY4MzAzMzk0NSwibmJmIjoxNjgzMDI2NzQwLCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtMDhlMDEzZWE0ZDY4NGUyYmE0NmNjNzFjOTcyZWJkMzIiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOmZhbHNlLCJvdXRib3VuZC1jYWxsIjpmYWxzZSwic2lwLW91dGJvdW5kLWNhbGwiOmZhbHNlLCJ0cmFuc2NyaXB0aW9uIjpmYWxzZSwicmVjb3JkaW5nIjpmYWxzZX0sInVzZXIiOnsiaGlkZGVuLWZyb20tcmVjb3JkZXIiOmZhbHNlLCJtb2RlcmF0b3IiOnRydWUsIm5hbWUiOiJUZXN0IFVzZXIiLCJpZCI6ImF1dGgwfDY0NTBiMTQ3MWJkYmQ2OWVhNmNiODYxMiIsImF2YXRhciI6IiIsImVtYWlsIjoidGVzdC51c2VyQGNvbXBhbnkuY29tIn19LCJyb29tIjoiKiJ9.CzYwys0aZZiQU1UW3WmI8HINnY9NcEOU8WOy5JA1gTTS00LKie0e4g_W4YNzeezG3D8WAupwnx1Ei990v9lXzwlQnhhcauLefJLB_ckKS72OO9lC2SX_mPMKkzpPD3-OW_IeM7-P7Oak3BUSfPMhgLngBRQmdX4gF5k0ukQ5YYc2KmSXtWkpQZabBkbRnmJAbfvPJFlZNKV3hDzWvRJf_rWL9cdThPO9jouZHMXvHdsp2Mlyl8v10ho_Uy2BHRH130nIBeWSd6-HJqlfJAb4rwz0BWTtP_FksbqmmDRKi66OmX21yFIsYpaiwy9mRy53oVZX5gjJGYP_SoGUFUXIpQ"
+      });
     }
-    }
-</script>      
-
-        
-
-
-
-{% include 'footer.html' %}
+  </script>
+{% include 'doctor_footer.html' %}
 
 
 

@@ -121,7 +121,7 @@ def share_progress():
 def booking_status():
     data={}
     ids=session['login_id']
-    q="SELECT *,CONCAT(`patients`.first_name,' ',patients.`last_name`)AS NAME,CONCAT(doctors.`first_name`,' ',doctors.`last_name`)AS DNAME FROM `booking` INNER JOIN patients USING(patient_id)INNER JOIN `doctors` USING(doctor_id) where patients.login_id='%s'"%(ids)
+    q="SELECT booking.*, CONCAT(doctors.first_name, ' ', doctors.last_name) AS doctor_name, doctors.* FROM booking INNER JOIN doctors ON booking.doctor_id = doctors.doctor_id WHERE booking.patient_id ='%s'"%(ids)
     res=select(q)
     data['book']=res
     if 'action' in request.args:

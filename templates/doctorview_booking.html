@@ -1,37 +1,120 @@
 {% include 'doctor_header.html'%}
-<body style="background: pink">
+<body>
 	<br><br><br>
-	<h1 align="center"><font color="black"><u>Booking Status</u></font></h1>
-	<form method="post">
-
-	<table  align="center" class="table" style="width:700px;">
-			<tr>
-				<th><font color="black">Booking Date</font></th>
-				<th><font color="black">Patient Name</font></th>
-				<th><font color="black">Doctor Name</font></th>
-				<th><font color="black">Status</font></th>
-			</tr>
-			<tbody>
-			{% for row in data['book']%}
-			<td><font color="black"><b>{{row['date']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;
-			<td><font color="black"><b>{{row['NAME']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;
-			<td><font color="black"><b>{{row['DNAME']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<!-- <td><font color="black"><b>{{row['status']}}</b></font></td> -->
-			
-					{% if row['status']=='Booked' %}
-					<td>
-						<a href="/doctor/updatebooking_status?id={{row['booking_id']}}" style="text-decoration: none" class="btn btn-primary">Accept</a>
-					
-						<a href="/doctor/updatebooking_status?id1={{row['booking_id']}}" style="text-decoration: none" class="btn btn-primary">Reject</a>
-					</td>&nbsp;&nbsp;&nbsp;&nbsp;
-					{% else %}
-					<td><font color="black"><b>{{row['status']}}</b></font></td>&nbsp;&nbsp;&nbsp;&nbsp;
-					<td><a href="/doctor/view_progress?id={{row['booking_id']}}" class="btn btn-sm btn-danger" style="text-decoration: none; size: width=350px; height: 40px; padding:10px;">View Patient Progress</a></td>
-				{% endif %}
-
-		</tbody>
-		{% endfor %}
-	</table>
-	</form>
-<br><br><br><br>
-{% include 'footer.html'%}
+	<h1 align="center"><font color="black"><u>Appointment Request</u></font></h1>
+	<style>
+		.main-feed {
+			display: flex;
+			flex-direction: column;
+			min-height: 70vh;
+			width: 100vh;
+			border: 2px solid rgba(80, 80, 80, 0.757);
+			margin: 7vh auto;
+			border-radius: 2rem;
+			padding: 1rem;
+		}
+	
+		.mes-div {
+			width: 100%;
+			height: 20vh;
+			background-color: antiquewhite;
+			margin-bottom: 1rem;
+			background-color: #ffffff;
+			border-radius: 2vh;
+			box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+			cursor: pointer;
+			padding: 3vh;
+		}
+	
+		.mes-div:hover {
+			box-shadow: rgba(149, 157, 165, 0.435) 0px 8px 24px;
+		}
+	
+		.use-type {
+			display: flex;
+			align-items: center;
+			/* padding: 10px; */
+			height: fit-content;
+		}
+	
+		.use-type p {
+			margin: 0;
+			margin-left: 7px;
+		}
+	
+		.name-div {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+	
+		.name-div h1 {
+			margin: 0;
+			padding: 0%;
+		}
+	
+		.not-date,
+		.not-time,
+		.mes-con {
+			display: flex;
+			align-items: center;
+		}
+	
+		.not-date p,
+		.not-time p,
+		.mes-con p {
+			margin: 0;
+			padding: 0%;
+			padding-left: 2vh;
+		}
+	
+		.not {
+			display: flex;
+			gap: 3vh;
+		}
+	
+		.mes-icon-con {
+			display: flex;
+			justify-content: space-between;
+		}
+		.acc-type{
+			text-transform: capitalize;
+		}
+	</style>
+	
+	<body style="background: pink">
+	
+		<div class="main-feed">
+			{% for row in data['book'] %}
+			<a href="doctor_patients?P_id={{row['patient_id']}}&D_id={{row['doctor_id']}}">
+				<div class="mes-div">
+					<div class="name-div">
+						<h1>{{row['patient_name']}}</h1>
+						<i class="far fa-bell"></i>
+					</div>
+					<div class="mes-icon-con">
+						<div class="use-type">
+							<p class="acc-type">{{row['des']}}</p>
+						</div>
+						<div class="mes-con">
+							<button type="button" class="btn btn-primary">View</button>
+						</div>
+					</div>
+					<!-- <h2>Notification</h2> -->
+					<div class="not">
+						<div class="not-date">
+							<i class="far fa-calendar"></i>
+							<p>{{row['date']}}</p>
+						</div>
+						<div class="not-time">
+							<i class="far fa-clock"></i>
+							<p>{{row['time']}}</p>
+						</div>
+					</div>
+				</div>
+	
+			</a>
+			{% endfor %}
+	
+		</div>
+{% include 'doctor_footer.html'%}
