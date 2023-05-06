@@ -95,7 +95,7 @@
 					<h3>+91 {{row['phone']}}</h3>
 					<h3>{{row['email']}}</h3>
 					<h5>{{row['specialization']}}</h5>
-					<h3 style="color: aquamarine;">{{row['a_date']}}</h3>
+					<h3 style="color: rgb(255, 127, 127);">{{row['a_date']}}</h3>
 				</div>
 				<div class="sub2">
 					<label for="file-ip-">
@@ -131,10 +131,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="textarea">
+		<!-- <div class="textarea">
 			<textarea name="" id="" placeholder="Write the Specialization" readonly>join @ 5:00pmvsdchdhgyud</textarea>
 			<input type="hidden" value="">
-		</div>
+		</div> -->
 		<div class="buttons-div">
 		{%if row['status'] == None %}
 			<a href="/admin/viewdoctors?id1=" style="text-decoration: none" class="btn btn-primary">Pending</a>
